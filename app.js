@@ -1,370 +1,439 @@
 const translations = {
   de: {
-    pageTitle: 'Wir treffen uns',
-    pageSubtitle: 'Senden Sie eine ics-Kalenderdatei in einen Chat. Mitglieder können die Datei herunterladen und klicken, um den Termin im persönlichen Kalender einzutragen.',
-    languageLabel: 'Sprache festlegen:',
-    meetingTitleLabel: 'Titel:',
-    descriptionLabel: 'Beschreibung:',
-    startDateLabel: 'Datum:',
-    startTimeLabel: 'Uhrzeit:',
-    durationLabel: 'Dauer in Minuten:',
-    locationTypeLabel: 'Location:',
-    serverLabel: 'Jitsi-Auswahl:',
-    serverHint: 'Wird nur verwendet, wenn die Location auf online steht.',
-    customServerLabel: 'Anderen Server angeben:',
-    roomLabel: 'Raum angeben (online):',
-    roomHint: 'Hinweis: Der Raumname sollte so gewählt werden, dass er nicht erraten werden kann.',
-    offlineLocationLabel: 'Ort angeben (offline):',
-    offlineLocationPlaceholder: 'z. B. Raum123',
-    timezoneLabel: 'Zeitzone:',
-    sequenceLabel: 'Version:',
-    sequenceHint: 'Bei einem Update die Versionsnummer erhöhen.',
-    sequenceOptions: ['Version 1', 'Version 2', 'Version 3', 'Version 4', 'Version 5', 'Version 6'],
-    submitButton: 'In Chat senden',
-    copyButton: 'Nachricht kopieren',
-    copiedButton: 'Nachricht kopiert',
-    submitHint: 'Der Button erzeugt einen Chat-Entwurf mit .ics-Datei.',
+    pageTitle: 'Delta Bahn',
+    pageSubtitle: 'Füge deinen Bahn-Suchlink ein und teile die ausgelesene Verbindung über Delta Chat.',
+    languageLabel: 'Sprache:',
+    searchLinkLabel: 'Bahn-Suchlink:',
+    searchLinkHint: 'Suchen Sie eine Verbindung auf bahn.de. Sobald Sie eine einzelne Verbindung auf der Webseite angezeigt bekommen, kopieren Sie den Link hierher.',
+    coachLabel: 'Wagen (optional):',
+    seatLabel: 'Platz (optional):',
+    showConnectionButton: 'Verbindung zeigen',
+    delayButton: 'Verspätung zeigen',
+    liveDepartureButton: 'Live-Abfahrt',
+    liveArrivalButton: 'Live-Ankunft',
+    deleteButton: 'Verbindung löschen',
+    sendButton: 'Senden',
+    tripHint: 'Link einfügen, gültige Verbindung wird automatisch angezeigt.',
     outputHeading: 'Vorschau',
-    footerLinkLabel: 'Projekt auf Codeberg ansehen',
-    customServerOption: 'Anderer Server',
-    hintLine: 'ℹ️ Hinweis: Klicken Sie die Datei, um den unten beschriebenen Termin in den persönlichen Kalender aufzunehmen.',
-    labelTitle: 'Titel',
-    labelDescription: 'Beschreibung',
-    labelDate: 'Datum',
-    labelTime: 'Uhrzeit',
-    labelDuration: 'Dauer',
-    labelTimezone: 'Zeitzone',
-    labelLocation: 'Ort',
-    labelJoin: 'Link',
-    labelSequence: 'Version',
-    iconTitle: '🏷️',
-    iconDescription: '💬',
-    iconDate: '📅',
-    iconTime: '⏰',
-    iconDuration: '⏳',
-    iconTimezone: '🌍',
-    iconLocation: '📍',
-    iconLink: '🔗',
-    iconSequence: '🔄',
-    fallbackHint: 'webxdc ist hier nicht verfügbar. Nachrichtentext wurde kopiert.',
-    preparedHint: 'Der Chat-Entwurf wurde mit .ics-Datei vorbereitet.',
-    errorHint: 'Die Nachricht konnte nicht an den Chat übergeben werden.'
+    footerLinkLabel: 'Delta Bahn auf Codeberg',
+    apiFooterInfo: 'Bahn API: v6.db.transport.rest',
+    fallbackHint: 'webxdc ist nicht verfügbar. Nachricht wurde kopiert.',
+    preparedHint: 'Der Chat-Entwurf mit ICS-Datei wurde vorbereitet.',
+    errorHint: 'Die Nachricht konnte nicht gesendet werden.',
+    savedHint: 'Verbindung erfolgreich erkannt und gespeichert.',
+    deletedHint: 'Gespeicherte Verbindung gelöscht.',
+    parseErrorHint: 'Ungültiger Suchlink. Der Link muss die Wörter "bahn" und "suche" enthalten und aus der Bahn-Verbindungssuche stammen.',
+    saveFirstHint: 'Bitte zuerst einen gültigen Bahn-Suchlink eingeben.',
+    previewPlaceholder: 'Noch keine gültige Verbindung erkannt.\nDer Link muss die Wörter "bahn" und "suche" enthalten.',
+    delayLoadingHint: 'Verspätungsdaten werden abgerufen…',
+    liveDepartureLoadingHint: 'Live-Abfahrtsdaten werden abgerufen…',
+    liveArrivalLoadingHint: 'Live-Ankunftsdaten werden abgerufen…',
+    delayFetchErrorHint: 'Verspätungsdaten konnten nicht abgerufen werden.',
+    liveFetchErrorHint: 'Live-Daten konnten nicht abgerufen werden.',
+    delayHeading: '🔴 Aktuelle Verspätungsinformation:',
+    liveDepartureHeading: '🟢 Live-Abfahrt:',
+    liveArrivalHeading: '🟢 Live-Ankunft:',
+    delayOnTime: 'Pünktlich',
+    delayUnit: 'Min',
+    delayNoData: 'Keine Echtzeitdaten',
+    liveNoData: 'Keine passenden Live-Daten gefunden',
+    iconRoute: '🚂',
+    iconDeparture: '🕐',
+    iconArrival: '⏰',
+    iconLeg: '🚆',
+    iconSeat: '💺',
+    labelRoute: 'Verbindung',
+    labelDeparture: 'Abfahrt',
+    labelArrival: 'Ankunft',
+    labelLeg: 'Teilfahrt',
+    labelSeatPlan: 'Sitzplan',
+    labelCoach: 'Wagen',
+    labelSeat: 'Platz',
+    labelPlanned: 'geplant',
+    hintLine: 'ℹ️ Aus Bahn-Link ausgelesene Verbindungsdaten:'
   },
   en: {
-    pageTitle: 'meet up',
-    pageSubtitle: 'Create an appointment as an *.ics calendar file and send it to a chat. By downloading and opening it, chat members can add the appointment to their own calendar.',
-    languageLabel: 'Choose language:',
-    meetingTitleLabel: 'Title:',
-    descriptionLabel: 'Description:',
-    startDateLabel: 'Date:',
-    startTimeLabel: 'Time:',
-    durationLabel: 'Duration in minutes:',
-    locationTypeLabel: 'Location:',
-    serverLabel: 'Jitsi selection:',
-    serverHint: 'Only used when location is set to online.',
-    customServerLabel: 'Enter custom server:',
-    roomLabel: 'Room (online):',
-    roomHint: 'Hint: choose a room name that is hard to guess.',
-    offlineLocationLabel: 'Place (offline):',
-    offlineLocationPlaceholder: 'e.g. Room123',
-    timezoneLabel: 'Timezone:',
-    sequenceLabel: 'Version:',
-    sequenceHint: 'Increase the version number when updating the appointment.',
-    sequenceOptions: ['Version 1', 'Version 2', 'Version 3', 'Version 4', 'Version 5', 'Version 6'],
-    submitButton: 'Send to chat',
-    copyButton: 'Copy message',
-    copiedButton: 'Message copied',
-    submitHint: 'The button prepares a chat draft with an .ics calendar file.',
+    pageTitle: 'Delta Train',
+    pageSubtitle: 'Paste your Bahn search link and share parsed trip details via Delta Chat.',
+    languageLabel: 'Language:',
+    searchLinkLabel: 'Bahn Search Link:',
+    searchLinkHint: 'Search for a connection on bahn.de. Once a single connection is shown, copy that link and paste it here.',
+    coachLabel: 'Coach (optional):',
+    seatLabel: 'Seat (optional):',
+    showConnectionButton: 'Show connection',
+    delayButton: 'Show delays',
+    liveDepartureButton: 'Live departure',
+    liveArrivalButton: 'Live arrival',
+    deleteButton: 'Delete connection',
+    sendButton: 'Send',
+    tripHint: 'Paste link, valid connection will appear automatically.',
     outputHeading: 'Preview',
-    footerLinkLabel: 'View project on Codeberg',
-    customServerOption: 'Custom server',
-    hintLine: 'ℹ️ Notice: Click the file to add the appointment described below to your personal calendar.',
-    labelTitle: 'Title',
-    labelDescription: 'Description',
-    labelDate: 'Date',
-    labelTime: 'Time',
-    labelDuration: 'Duration',
-    labelTimezone: 'Timezone',
-    labelLocation: 'Location',
-    labelJoin: 'Link',
-    labelSequence: 'Version',
-    iconTitle: '🏷️',
-    iconDescription: '💬',
-    iconDate: '📅',
-    iconTime: '⏰',
-    iconDuration: '⏳',
-    iconTimezone: '🌍',
-    iconLocation: '📍',
-    iconLink: '🔗',
-    iconSequence: '🔄',
-    fallbackHint: 'webxdc is not available here. The message text was copied.',
-    preparedHint: 'The chat draft was prepared with an .ics file.',
-    errorHint: 'The message could not be handed over to the chat.'
-  },
-  nl: {
-    pageTitle: 'Wij ontmoeten elkaar',
-    pageSubtitle: 'Maak een afspraak als *.ics kalenderbestand en stuur dit naar een chat. Door te downloaden en te openen voegen chatleden de afspraak toe aan hun eigen kalender.',
-    languageLabel: 'Kies taal:',
-    meetingTitleLabel: 'Titel:',
-    descriptionLabel: 'Beschrijving:',
-    startDateLabel: 'Datum:',
-    startTimeLabel: 'Tijd:',
-    durationLabel: 'Duur in minuten:',
-    locationTypeLabel: 'Locatie:',
-    serverLabel: 'Jitsi-keuze:',
-    serverHint: 'Alleen gebruikt als locatie op online staat.',
-    customServerLabel: 'Aangepaste server invoeren:',
-    roomLabel: 'Ruimte (online):',
-    roomHint: 'Tip: kies een ruimtenaam die moeilijk te raden is.',
-    offlineLocationLabel: 'Plaats (offline):',
-    offlineLocationPlaceholder: 'bijv. Ruimte123',
-    timezoneLabel: 'Tijdzone:',
-    sequenceLabel: 'Versie:',
-    sequenceHint: 'Verhoog het versienummer bij een update van de afspraak.',
-    sequenceOptions: ['Versie 1', 'Versie 2', 'Versie 3', 'Versie 4', 'Versie 5', 'Versie 6'],
-    submitButton: 'Naar chat sturen',
-    copyButton: 'Bericht kopieren',
-    copiedButton: 'Bericht gekopieerd',
-    submitHint: 'De knop maakt een chatconcept met een .ics-kalenderbestand.',
-    outputHeading: 'Voorbeeld',
-    footerLinkLabel: 'Bekijk project op Codeberg',
-    customServerOption: 'Aangepaste server',
-    hintLine: 'ℹ️ Let op: klik op het bestand om de hieronder beschreven afspraak aan je persoonlijke kalender toe te voegen.',
-    labelTitle: 'Titel',
-    labelDescription: 'Beschrijving',
-    labelDate: 'Datum',
-    labelTime: 'Tijd',
-    labelDuration: 'Duur',
-    labelTimezone: 'Tijdzone',
-    labelLocation: 'Locatie',
-    labelJoin: 'Link',
-    labelSequence: 'Versie',
-    iconTitle: '🏷️',
-    iconDescription: '💬',
-    iconDate: '📅',
-    iconTime: '⏰',
-    iconDuration: '⏳',
-    iconTimezone: '🌍',
-    iconLocation: '📍',
-    iconLink: '🔗',
-    iconSequence: '🔄',
-    fallbackHint: 'webxdc is hier niet beschikbaar. De berichttekst is gekopieerd.',
-    preparedHint: 'Het chatconcept is voorbereid met een .ics-bestand.',
-    errorHint: 'Het bericht kon niet aan de chat worden doorgegeven.'
-  },
-  fr: {
-    pageTitle: 'Nous nous retrouvons',
-    pageSubtitle: 'Creez un rendez-vous sous forme de fichier calendrier *.ics et envoyez-le dans un chat. En telechargeant et en ouvrant le fichier, les membres peuvent l ajouter a leur calendrier personnel.',
-    languageLabel: 'Choisir la langue :',
-    meetingTitleLabel: 'Titre :',
-    descriptionLabel: 'Description :',
-    startDateLabel: 'Date :',
-    startTimeLabel: 'Heure :',
-    durationLabel: 'Duree en minutes :',
-    locationTypeLabel: 'Lieu :',
-    serverLabel: 'Selection Jitsi :',
-    serverHint: 'Utilise uniquement si le lieu est online.',
-    customServerLabel: 'Saisir un serveur personnalise :',
-    roomLabel: 'Salle (online) :',
-    roomHint: 'Conseil : choisissez un nom de salle difficile a deviner.',
-    offlineLocationLabel: 'Lieu (offline) :',
-    offlineLocationPlaceholder: 'ex. Salle123',
-    timezoneLabel: 'Fuseau horaire :',
-    sequenceLabel: 'Version :',
-    sequenceHint: 'Augmentez le numéro de version lors d’une mise à jour du rendez-vous.',
-    sequenceOptions: ['Version 1', 'Version 2', 'Version 3', 'Version 4', 'Version 5', 'Version 6'],
-    submitButton: 'Envoyer au chat',
-    copyButton: 'Copier le message',
-    copiedButton: 'Message copie',
-    submitHint: 'Le bouton prepare un brouillon de chat avec un fichier .ics.',
-    outputHeading: 'Apercu',
-    footerLinkLabel: 'Voir le projet sur Codeberg',
-    customServerOption: 'Serveur personnalise',
-    hintLine: 'ℹ️ Info : cliquez sur le fichier pour ajouter le rendez-vous ci-dessous a votre calendrier personnel.',
-    labelTitle: 'Titre',
-    labelDescription: 'Description',
-    labelDate: 'Date',
-    labelTime: 'Heure',
-    labelDuration: 'Duree',
-    labelTimezone: 'Fuseau horaire',
-    labelLocation: 'Lieu',
-    labelJoin: 'Lien',
-    labelSequence: 'Version',
-    iconTitle: '🏷️',
-    iconDescription: '💬',
-    iconDate: '📅',
-    iconTime: '⏰',
-    iconDuration: '⏳',
-    iconTimezone: '🌍',
-    iconLocation: '📍',
-    iconLink: '🔗',
-    iconSequence: '🔄',
-    fallbackHint: 'webxdc n est pas disponible ici. Le texte a ete copie.',
-    preparedHint: 'Le brouillon de chat avec fichier .ics est pret.',
-    errorHint: 'Le message n a pas pu etre transfere au chat.'
+    footerLinkLabel: 'Delta Train on Codeberg',
+    apiFooterInfo: 'Rail API: v6.db.transport.rest',
+    fallbackHint: 'webxdc is not available. Message was copied.',
+    preparedHint: 'The chat draft with ICS file was prepared.',
+    errorHint: 'The message could not be sent.',
+    savedHint: 'Connection parsed and saved.',
+    deletedHint: 'Saved connection deleted.',
+    parseErrorHint: 'Invalid Bahn search link. Please paste a link from bahn.de/buchung/fahrplan/suche.',
+    saveFirstHint: 'Please enter a valid Bahn search link first.',
+    previewPlaceholder: 'No valid connection found yet.\nThe link must contain the words "bahn" and "suche".',
+    delayLoadingHint: 'Fetching delay data…',
+    liveDepartureLoadingHint: 'Fetching live departure data…',
+    liveArrivalLoadingHint: 'Fetching live arrival data…',
+    delayFetchErrorHint: 'Could not fetch delay data.',
+    liveFetchErrorHint: 'Could not fetch live data.',
+    delayHeading: '🔴 Current delay information:',
+    liveDepartureHeading: '🟢 Live departure:',
+    liveArrivalHeading: '🟢 Live arrival:',
+    delayOnTime: 'On time',
+    delayUnit: 'min',
+    delayNoData: 'No real-time data',
+    liveNoData: 'No matching live data found',
+    iconRoute: '🚂',
+    iconDeparture: '🕐',
+    iconArrival: '⏰',
+    iconLeg: '🚆',
+    iconSeat: '💺',
+    labelRoute: 'Route',
+    labelDeparture: 'Departure',
+    labelArrival: 'Arrival',
+    labelLeg: 'Leg',
+    labelSeatPlan: 'Seat plan',
+    labelCoach: 'Coach',
+    labelSeat: 'Seat',
+    labelPlanned: 'planned',
+    hintLine: 'ℹ️ Parsed trip data from Bahn link:'
   }
 };
 
 function localeForLanguage(language) {
-  if (language === 'de') {
-    return 'de-DE';
-  }
-  if (language === 'nl') {
-    return 'nl-NL';
-  }
-  if (language === 'fr') {
-    return 'fr-FR';
-  }
-  return 'en-GB';
+  return language === 'de' ? 'de-DE' : 'en-GB';
 }
 
-const form = document.getElementById('inviteForm');
+const STORAGE_KEY = 'delta-bahn-trip-v2';
+const API_BASE = 'https://v6.db.transport.rest';
+const BAHN_IMAGE_PATH = 'icons/bahn.png';
+
+const form = document.getElementById('tripForm');
 const languageSelect = document.getElementById('language');
-const locationType = document.getElementById('locationType');
-const onlineFields = document.getElementById('onlineFields');
-const onlineRoomField = document.getElementById('onlineRoomField');
-const offlineLocationField = document.getElementById('offlineLocationField');
-const offlineLocationInput = document.getElementById('offlineLocation');
-const serverSelect = document.getElementById('serverSelect');
-const customServerField = document.getElementById('customServerField');
-const customServerInput = document.getElementById('customServer');
-const roomNameInput = document.getElementById('roomName');
-const meetingTitleInput = document.getElementById('meetingTitle');
-const descriptionInput = document.getElementById('description');
-const startDateInput = document.getElementById('startDate');
-const startTimeInput = document.getElementById('startTime');
-const durationInput = document.getElementById('durationMinutes');
-const timezoneSelect = document.getElementById('timezoneSelect');
-const sequenceInput = document.getElementById('sequenceInput');
-const submitButton = document.getElementById('submitButton');
-const submitHint = document.getElementById('submitHint');
-const invitationOutput = document.getElementById('invitationOutput');
+const searchLinkInput = document.getElementById('searchLink');
+const detailsSection = document.getElementById('detailsSection');
+const coachInput = document.getElementById('coach');
+const seatInput = document.getElementById('seat');
+const showConnectionButton = document.getElementById('showConnectionButton');
+const delayButton = document.getElementById('delayButton');
+const liveDepartureButton = document.getElementById('liveDepartureButton');
+const liveArrivalButton = document.getElementById('liveArrivalButton');
+const deleteButton = document.getElementById('deleteButton');
+const sendButton = document.getElementById('sendButton');
+const tripHint = document.getElementById('tripHint');
+const tripOutput = document.getElementById('tripOutput');
 
 let feedbackTimer = 0;
+let parsedTrip = null;
+let parsedSourceLink = '';
+let previewMode = 'connection';
+let lastDelayResults = null;
+let lastLiveDepartureResult = null;
+let lastLiveArrivalResult = null;
 
-function selectedServer() {
-  if (serverSelect.value === 'custom') {
-    return customServerInput.value.trim();
-  }
-  return serverSelect.value.trim();
+function decodeParamValue(value) {
+  return (value || '').replace(/\+/g, ' ').trim();
 }
 
-function buildJoinUrl(server, room) {
-  const trimmedServer = (server || '').trim();
-  const trimmedRoom = (room || '')
-    .trim()
-    .replace(/\s+/g, '_')
-    .replace(/^\/+/, '');
-
-  if (!trimmedServer && !trimmedRoom) {
-    return '';
-  }
-  if (!trimmedServer) {
-    return trimmedRoom;
-  }
-  if (!trimmedRoom) {
-    return trimmedServer.replace(/\/+$/, '');
-  }
-
-  return trimmedServer.replace(/\/+$/, '') + '/' + trimmedRoom;
+function parseStationFromOid(oid) {
+  if (!oid) return '';
+  const match = oid.match(/(?:^|@)O=([^@]*)@/);
+  return match ? decodeParamValue(match[1]) : '';
 }
 
-function sanitizeSequence(value) {
-  const parsed = Number.parseInt(value, 10);
-  if (Number.isNaN(parsed) || parsed < 0) {
-    return 0;
-  }
-  return parsed;
+function parseCompactTimestamp(ts) {
+  if (!/^\d{12}$/.test(ts || '')) return null;
+  const year = Number(ts.slice(0, 4));
+  const month = Number(ts.slice(4, 6)) - 1;
+  const day = Number(ts.slice(6, 8));
+  const hour = Number(ts.slice(8, 10));
+  const minute = Number(ts.slice(10, 12));
+  const date = new Date(year, month, day, hour, minute, 0, 0);
+  return Number.isNaN(date.getTime()) ? null : date;
 }
 
-function sanitizeDuration(value) {
-  const parsed = Number.parseInt(value, 10);
-  if (Number.isNaN(parsed) || parsed <= 0) {
-    return '';
-  }
-  return parsed;
+function toIsoLocal(date) {
+  if (!date) return '';
+  const yyyy = String(date.getFullYear());
+  const mm = String(date.getMonth() + 1).padStart(2, '0');
+  const dd = String(date.getDate()).padStart(2, '0');
+  const hh = String(date.getHours()).padStart(2, '0');
+  const min = String(date.getMinutes()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}T${hh}:${min}:00`;
 }
 
-function createUid() {
-  if (window.crypto && typeof window.crypto.randomUUID === 'function') {
-    return window.crypto.randomUUID() + '@meet-up.webxdc';
-  }
-
-  return String(Date.now()) + '-' + Math.random().toString(36).slice(2, 12) + '@meet-up.webxdc';
+function parseHdTimestamp(hdValue) {
+  if (!hdValue) return null;
+  const date = new Date(hdValue);
+  return Number.isNaN(date.getTime()) ? null : date;
 }
 
-function getDtStampUtc() {
-  return new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}Z$/, 'Z');
+function parseLegsFromGh(ghValue) {
+  if (!ghValue) return [];
+  const legs = [];
+  const pattern = /(?:^|[§¶])T\$[^$]*?@O=([^@]*)@[^$]*?@L=(\d+)@[^$]*?\$[^$]*?@O=([^@]*)@[^$]*?@L=(\d+)@[^$]*?\$(\d{12})\$(\d{12})\$([^$]*)\$/g;
+  let match;
+
+  while ((match = pattern.exec(ghValue)) !== null) {
+    const dep = parseCompactTimestamp(match[5]);
+    const arr = parseCompactTimestamp(match[6]);
+    legs.push({
+      from: decodeParamValue(match[1]),
+      fromId: match[2],
+      to: decodeParamValue(match[3]),
+      toId: match[4],
+      departure: dep ? toIsoLocal(dep) : '',
+      arrival: arr ? toIsoLocal(arr) : '',
+      train: (match[7] || '').trim().replace(/\s+/g, ' ')
+    });
+  }
+
+  return legs;
 }
 
-function formatDateForMessage(dateValue, language) {
-  if (!dateValue) {
-    return '';
-  }
-
-  const parsed = new Date(dateValue + 'T00:00:00');
-  if (Number.isNaN(parsed.getTime())) {
-    return dateValue;
-  }
-
-  return new Intl.DateTimeFormat(localeForLanguage(language), { dateStyle: 'full' }).format(parsed);
+function isLikelyBahnSearchLink(link) {
+  const normalized = String(link || '').toLowerCase();
+  return normalized.includes('bahn') && normalized.includes('suche');
 }
 
-function formatTimeForMessage(timeValue, language) {
-  if (!timeValue) {
-    return '';
+function parseDbSearchLink(link) {
+  if (!isLikelyBahnSearchLink(link)) {
+    throw new Error('invalid-link');
   }
 
-  const parts = timeValue.split(':');
-  if (parts.length < 2) {
-    return timeValue;
+  const url = new URL(link);
+  const validHost = /(^|\.)bahn\.de$/i.test(url.hostname);
+  if (!validHost) {
+    throw new Error('invalid-link');
   }
 
-  const date = new Date(Date.UTC(1970, 0, 1, Number(parts[0]), Number(parts[1])));
-  if (Number.isNaN(date.getTime())) {
-    return timeValue;
+  const hashParams = new URLSearchParams((url.hash || '').replace(/^#/, ''));
+  const searchParams = url.searchParams;
+  const params = hashParams.size > 0 ? hashParams : searchParams;
+
+  if (!params || !params.toString()) {
+    throw new Error('missing-params');
   }
 
-  return new Intl.DateTimeFormat(localeForLanguage(language), {
-    timeStyle: 'short',
-    timeZone: 'UTC'
-  }).format(date);
+  const fromName = decodeParamValue(params.get('so')) || parseStationFromOid(params.get('soid'));
+  const toName = decodeParamValue(params.get('zo')) || parseStationFromOid(params.get('zoid'));
+  const hd = parseHdTimestamp(params.get('hd'));
+  const legs = parseLegsFromGh(params.get('gh'));
+
+  const firstLeg = legs[0] || null;
+  const lastLeg = legs.length > 0 ? legs[legs.length - 1] : null;
+
+  const departureDate = hd || (firstLeg && firstLeg.departure ? new Date(firstLeg.departure) : null);
+  const arrivalDate = lastLeg && lastLeg.arrival ? new Date(lastLeg.arrival) : null;
+
+  return {
+    sourceLink: link,
+    from: fromName || (firstLeg ? firstLeg.from : ''),
+    to: toName || (lastLeg ? lastLeg.to : ''),
+    departure: departureDate && !Number.isNaN(departureDate.getTime()) ? toIsoLocal(departureDate) : '',
+    arrival: arrivalDate && !Number.isNaN(arrivalDate.getTime()) ? toIsoLocal(arrivalDate) : '',
+    legs
+  };
 }
 
-function formatStartAsIcsLocal(dateValue, timeValue) {
-  if (!dateValue || !timeValue) {
-    return '';
+async function fetchDelays(parsed) {
+  if (!parsed || !parsed.legs || parsed.legs.length === 0) {
+    throw new Error('no-legs');
   }
 
-  const parts = dateValue.split('-');
-  const timeParts = timeValue.split(':');
-  if (parts.length !== 3 || timeParts.length < 2) {
-    return '';
+  const results = [];
+  for (const leg of parsed.legs) {
+    if (!leg.fromId || !leg.departure) {
+      results.push({ leg, departure: null });
+      continue;
+    }
+    try {
+      const when = new Date(leg.departure).toISOString();
+      const url = `${API_BASE}/stops/${encodeURIComponent(leg.fromId)}/departures?when=${encodeURIComponent(when)}&results=30&duration=10&language=de`;
+      const response = await fetch(url);
+      if (!response.ok) {
+        results.push({ leg, departure: null });
+        continue;
+      }
+      const data = await response.json();
+      const departures = Array.isArray(data) ? data : (data.departures || []);
+      const scheduledDep = new Date(leg.departure);
+      const match = departures.find((dep) => {
+        if (!dep.plannedWhen) return false;
+        const plannedTime = new Date(dep.plannedWhen);
+        return Math.abs(plannedTime - scheduledDep) < 3 * 60 * 1000;
+      });
+      results.push({ leg, departure: match || null });
+    } catch (_error) {
+      results.push({ leg, departure: null });
+    }
   }
-
-  return parts[0] + parts[1] + parts[2] + 'T' + timeParts[0].padStart(2, '0') + timeParts[1].padStart(2, '0') + '00';
+  return results;
 }
 
-function durationMinutesToIso(minutes) {
-  if (!minutes) {
-    return '';
+function buildDelayMessage(parsed, values, delayResults) {
+  const copy = translations[languageSelect.value] || translations.de;
+  const lines = [copy.delayHeading, ''];
+
+  delayResults.forEach((result) => {
+    const { leg, departure } = result;
+    const depText = formatDateTimeForMessage(leg.departure, languageSelect.value);
+    const legLabel = `${leg.from || '?'} → ${leg.to || '?'}`;
+    const trainLabel = leg.train ? ` (${leg.train})` : '';
+
+    if (!departure) {
+      lines.push(`❓ ${legLabel}${trainLabel}: ${copy.delayNoData}`);
+      return;
+    }
+
+    const delaySeconds = departure.delay || 0;
+    const delayMin = Math.round(delaySeconds / 60);
+    const plannedText = departure.plannedWhen
+      ? formatDateTimeForMessage(departure.plannedWhen, languageSelect.value)
+      : depText;
+    const actualText = departure.when
+      ? formatDateTimeForMessage(departure.when, languageSelect.value)
+      : null;
+
+    if (delayMin > 0) {
+      lines.push(`🔴 ${legLabel}${trainLabel}: +${delayMin} ${copy.delayUnit}`);
+      if (actualText && actualText !== plannedText) {
+        lines.push(`   ${copy.labelDeparture}: ${plannedText} → ${actualText}`);
+      }
+    } else if (delayMin < 0) {
+      lines.push(`🟡 ${legLabel}${trainLabel}: ${delayMin} ${copy.delayUnit}`);
+    } else {
+      lines.push(`🟢 ${legLabel}${trainLabel}: ${copy.delayOnTime}`);
+    }
+  });
+
+  const seatLine = buildSeatLine(values, copy);
+  if (seatLine) {
+    lines.push('');
+    lines.push(seatLine);
+  }
+  return lines.join('\n');
+}
+
+async function fetchLiveEvent(stopId, plannedWhenIso, endpoint) {
+  if (!stopId || !plannedWhenIso) return null;
+  const when = new Date(plannedWhenIso).toISOString();
+  const url = `${API_BASE}/stops/${encodeURIComponent(stopId)}/${endpoint}?when=${encodeURIComponent(when)}&results=30&duration=20&language=de`;
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error('live-fetch-failed');
   }
 
-  const total = Number(minutes);
-  if (!Number.isFinite(total) || total <= 0) {
-    return '';
+  const data = await response.json();
+  const items = Array.isArray(data) ? data : (data[endpoint] || []);
+  const scheduled = new Date(plannedWhenIso);
+  return items.find((item) => {
+    if (!item || !item.plannedWhen) return false;
+    const planned = new Date(item.plannedWhen);
+    return Math.abs(planned - scheduled) < 3 * 60 * 1000;
+  }) || null;
+}
+
+function buildLiveEventMessage(type, parsed, values, result) {
+  const copy = translations[languageSelect.value] || translations.de;
+  const isDeparture = type === 'departure';
+  const heading = isDeparture ? copy.liveDepartureHeading : copy.liveArrivalHeading;
+  const leg = isDeparture ? parsed.legs[0] : parsed.legs[parsed.legs.length - 1];
+  const placeLabel = isDeparture ? (leg.from || parsed.from || '?') : (leg.to || parsed.to || '?');
+  const plannedIso = isDeparture ? leg.departure : leg.arrival;
+  const plannedText = formatDateTimeForMessage(plannedIso, languageSelect.value) || '?';
+
+  const lines = [heading, ''];
+  lines.push(`${copy.iconRoute} ${copy.labelRoute}: ${parsed.from || '?'} -> ${parsed.to || '?'}`);
+
+  if (!result) {
+    lines.push(`❓ ${copy.liveNoData}`);
+  } else {
+    const actualIso = result.when || result.plannedWhen || '';
+    const actualText = formatDateTimeForMessage(actualIso, languageSelect.value) || plannedText;
+    const delayMin = Math.round((result.delay || 0) / 60);
+    const timeLabel = isDeparture ? copy.labelDeparture : copy.labelArrival;
+    const icon = isDeparture ? copy.iconDeparture : copy.iconArrival;
+    const delayText = delayMin > 0
+      ? ` (+${delayMin} ${copy.delayUnit})`
+      : (delayMin < 0 ? ` (${delayMin} ${copy.delayUnit})` : ` (${copy.delayOnTime})`);
+
+    lines.push(`${icon} ${timeLabel} ${placeLabel}: ${actualText}${delayText}`);
+    if (actualText !== plannedText) {
+      lines.push(`   ${timeLabel} ${copy.labelPlanned}: ${plannedText}`);
+    }
   }
 
-  const hours = Math.floor(total / 60);
-  const mins = total % 60;
+  const seatLine = buildSeatLine(values, copy);
+  if (seatLine) {
+    lines.push('');
+    lines.push(seatLine);
+  }
+  return lines.join('\n');
+}
 
-  if (hours > 0 && mins > 0) {
-    return 'PT' + String(hours) + 'H' + String(mins) + 'M';
+function collectFormValues() {
+  return {
+    searchLink: (searchLinkInput.value || '').trim(),
+    coach: (coachInput.value || '').trim(),
+    seat: (seatInput.value || '').trim()
+  };
+}
+
+function formatDateTimeForMessage(isoLike, language) {
+  if (!isoLike) return '';
+  const date = new Date(isoLike);
+  if (Number.isNaN(date.getTime())) return '';
+
+  const formatter = new Intl.DateTimeFormat(localeForLanguage(language), {
+    dateStyle: 'medium',
+    timeStyle: 'short'
+  });
+  return formatter.format(date);
+}
+
+function buildSeatLine(values, copy) {
+  const parts = [];
+  if (values.coach) parts.push(`${copy.labelCoach}: ${values.coach}`);
+  if (values.seat) parts.push(`${copy.labelSeat}: ${values.seat}`);
+  if (parts.length === 0) return '';
+  return `${copy.iconSeat} ${copy.labelSeatPlan}: ${parts.join(', ')}`;
+}
+
+function buildTripMessage(parsed, values) {
+  const copy = translations[languageSelect.value] || translations.de;
+  if (!parsed) return copy.previewPlaceholder;
+
+  const lines = [copy.hintLine, ''];
+
+  if (parsed.from || parsed.to) {
+    lines.push(`${copy.iconRoute} ${copy.labelRoute}: ${parsed.from || '?'} -> ${parsed.to || '?'}`);
   }
-  if (hours > 0) {
-    return 'PT' + String(hours) + 'H';
-  }
-  return 'PT' + String(mins) + 'M';
+
+  const depText = formatDateTimeForMessage(parsed.departure, languageSelect.value);
+  if (depText) lines.push(`${copy.iconDeparture} ${copy.labelDeparture}: ${depText}`);
+
+  const arrText = formatDateTimeForMessage(parsed.arrival, languageSelect.value);
+  if (arrText) lines.push(`${copy.iconArrival} ${copy.labelArrival}: ${arrText}`);
+
+  parsed.legs.forEach((leg, index) => {
+    const legDep = formatDateTimeForMessage(leg.departure, languageSelect.value) || '?';
+    const legArr = formatDateTimeForMessage(leg.arrival, languageSelect.value) || '?';
+    const trainSuffix = leg.train ? ` (${leg.train})` : '';
+    lines.push(`${copy.iconLeg} ${copy.labelLeg} ${index + 1}: ${leg.from || '?'} -> ${leg.to || '?'} | ${legDep} - ${legArr}${trainSuffix}`);
+  });
+
+  const seatLine = buildSeatLine(values, copy);
+  if (seatLine) lines.push(seatLine);
+
+  return lines.join('\n');
 }
 
 function escapeIcsText(value) {
@@ -375,228 +444,279 @@ function escapeIcsText(value) {
     .replace(/\r\n|\r|\n/g, '\\n');
 }
 
-function escapeIcsUrl(value) {
-  return String(value).replace(/\r\n|\r|\n/g, '');
+function createUid() {
+  if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+    return `${window.crypto.randomUUID()}@delta-bahn.webxdc`;
+  }
+  return `${Date.now()}-${Math.random().toString(36).slice(2, 12)}@delta-bahn.webxdc`;
 }
 
-function collectFormValues(uid) {
-  const locationMode = locationType.value === 'online' ? 'online' : 'offline';
-  const summary = meetingTitleInput.value.trim();
-  const description = descriptionInput.value.trim();
-  const dtstart = formatStartAsIcsLocal(startDateInput.value, startTimeInput.value);
-  const dtstartDateText = formatDateForMessage(startDateInput.value, languageSelect.value);
-  const dtstartTimeText = formatTimeForMessage(startTimeInput.value, languageSelect.value);
-  const tzid = timezoneSelect.value;
-  const durationMinutes = sanitizeDuration(durationInput.value);
-  const duration = durationMinutesToIso(durationMinutes);
-  const sequence = sanitizeSequence(sequenceInput.value);
-
-  const server = locationMode === 'online' ? selectedServer() : '';
-  const room = locationMode === 'online' ? roomNameInput.value.trim() : '';
-  const joinUrl = locationMode === 'online' ? buildJoinUrl(server, room) : '';
-  const offlineLocation = locationMode === 'offline' ? offlineLocationInput.value.trim() : '';
-
-  let location = '';
-  if (locationMode === 'online') {
-    location = joinUrl;
-  }
-  if (locationMode === 'offline' && offlineLocation) {
-    location = offlineLocation;
-  }
-
-  return {
-    uid,
-    summary,
-    description,
-    dtstart,
-    dtstartDateText,
-    dtstartTimeText,
-    tzid,
-    duration,
-    durationMinutes,
-    sequence,
-    location,
-    joinUrl
-  };
+function toIcsLocal(isoLike) {
+  if (!isoLike) return '';
+  const date = new Date(isoLike);
+  if (Number.isNaN(date.getTime())) return '';
+  const yyyy = String(date.getFullYear());
+  const mm = String(date.getMonth() + 1).padStart(2, '0');
+  const dd = String(date.getDate()).padStart(2, '0');
+  const hh = String(date.getHours()).padStart(2, '0');
+  const min = String(date.getMinutes()).padStart(2, '0');
+  return `${yyyy}${mm}${dd}T${hh}${min}00`;
 }
 
-function buildSharedMessage(values) {
-  const copy = translations[languageSelect.value] || translations.de;
-  const lines = [copy.hintLine, ''];
-
-  if (values.summary) {
-    lines.push(copy.iconTitle + ' ' + copy.labelTitle + ': ' + values.summary);
-  }
-  if (values.description) {
-    lines.push(copy.iconDescription + ' ' + copy.labelDescription + ': ' + values.description);
-  }
-  if (values.dtstartDateText) {
-    lines.push(copy.iconDate + ' ' + copy.labelDate + ': ' + values.dtstartDateText);
-  }
-  if (values.dtstartTimeText) {
-    lines.push(copy.iconTime + ' ' + copy.labelTime + ': ' + values.dtstartTimeText);
-  }
-  if (values.durationMinutes) {
-    lines.push(copy.iconDuration + ' ' + copy.labelDuration + ': ' + String(values.durationMinutes) + ' min');
-  }
-  if (values.tzid) {
-    lines.push(copy.iconTimezone + ' ' + copy.labelTimezone + ': ' + values.tzid);
-  }
-  if (values.location) {
-    lines.push(copy.iconLocation + ' ' + copy.labelLocation + ': ' + values.location);
-  }
-  if (values.joinUrl) {
-    lines.push(copy.iconLink + ' ' + copy.labelJoin + ': ' + values.joinUrl);
-  }
-  if (Number.isFinite(values.sequence)) {
-    lines.push(copy.iconSequence + ' ' + copy.labelSequence + ': ' + String(values.sequence + 1));
-  }
-
-  return lines.join('\n');
+function durationMinutesToIso(minutes) {
+  if (!minutes || minutes <= 0) return '';
+  const hours = Math.floor(minutes / 60);
+  const mins = minutes % 60;
+  if (hours > 0 && mins > 0) return `PT${hours}H${mins}M`;
+  if (hours > 0) return `PT${hours}H`;
+  return `PT${mins}M`;
 }
 
-function buildIcsContent(values) {
+function getDtStampUtc() {
+  return new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}Z$/, 'Z');
+}
+
+function buildIcsContent(parsed, values) {
+  const summary = parsed.from && parsed.to ? `Reise von ${parsed.from} bis ${parsed.to}` : 'Bahnfahrt';
+  const description = buildTripMessage(parsed, values).split('\n').slice(1).join('\n');
+  const dtStart = toIcsLocal(parsed.departure);
+
+  let duration = '';
+  if (parsed.departure && parsed.arrival) {
+    const dep = new Date(parsed.departure);
+    const arr = new Date(parsed.arrival);
+    if (!Number.isNaN(dep.getTime()) && !Number.isNaN(arr.getTime()) && arr > dep) {
+      const minutes = Math.round((arr - dep) / 60000);
+      duration = durationMinutesToIso(minutes);
+    }
+  }
+
   const lines = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//DeltaChat//Wir treffen uns//DE',
+    'PRODID:-//Delta Bahn//DE',
     'CALSCALE:GREGORIAN',
     'METHOD:PUBLISH',
     'BEGIN:VEVENT',
-    'UID:' + escapeIcsText(values.uid),
-    'DTSTAMP:' + getDtStampUtc(),
-    'SEQUENCE:' + String(values.sequence)
+    `UID:${escapeIcsText(createUid())}`,
+    `DTSTAMP:${getDtStampUtc()}`,
+    'SEQUENCE:0',
+    `SUMMARY:${escapeIcsText(summary)}`
   ];
 
-  if (values.summary) {
-    lines.push('SUMMARY:' + escapeIcsText(values.summary));
-  }
-  if (values.description) {
-    lines.push('DESCRIPTION:' + escapeIcsText(values.description));
-  }
-  if (values.dtstart) {
-    lines.push('DTSTART;TZID=' + escapeIcsText(values.tzid) + ':' + values.dtstart);
-  }
-  if (values.duration) {
-    lines.push('DURATION:' + values.duration);
-  }
-  if (values.location) {
-    lines.push('LOCATION:' + escapeIcsText(values.location));
-  }
-  if (values.joinUrl) {
-    lines.push('URL:' + escapeIcsUrl(values.joinUrl));
+  if (description) lines.push(`DESCRIPTION:${escapeIcsText(description)}`);
+  if (dtStart) lines.push(`DTSTART;TZID=Europe/Berlin:${dtStart}`);
+  if (duration) lines.push(`DURATION:${duration}`);
+  if (parsed.from || parsed.to) {
+    lines.push(`LOCATION:${escapeIcsText(`${parsed.from || '?'} -> ${parsed.to || '?'}`)}`);
   }
 
   lines.push('END:VEVENT');
   lines.push('END:VCALENDAR');
-  return lines.join('\r\n') + '\r\n';
+  return `${lines.join('\r\n')}\r\n`;
 }
 
-function fileNameFromSummary(summary) {
-  const cleaned = summary
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9-_]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-    .slice(0, 50);
+function generateIcsFileName(from, to) {
+  const clean = (value) =>
+    (value || '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '_')
+      .replace(/^_+|_+$/g, '');
 
-  if (!cleaned) {
-    return 'termin.ics';
+  const fromClean = clean(from);
+  const toClean = clean(to);
+
+  if (fromClean && toClean) return `reiseplan_${fromClean}_${toClean}.ics`;
+  if (fromClean || toClean) return `reiseplan_${fromClean || toClean}.ics`;
+  return 'reiseplan.ics';
+}
+
+async function loadBahnImageBlob() {
+  const response = await fetch(BAHN_IMAGE_PATH);
+  if (!response.ok) {
+    throw new Error('bahn-image-not-found');
+  }
+  return response.blob();
+}
+
+function showFeedback(message, state) {
+  tripHint.dataset.feedback = 'true';
+  tripHint.textContent = message;
+  tripHint.classList.toggle('is-success', state === 'success');
+  tripHint.classList.toggle('is-error', state === 'error');
+
+  window.clearTimeout(feedbackTimer);
+  feedbackTimer = window.setTimeout(() => {
+    const copy = translations[languageSelect.value] || translations.de;
+    tripHint.dataset.feedback = '';
+    tripHint.textContent = copy.tripHint;
+    tripHint.classList.remove('is-success', 'is-error');
+  }, 2800);
+}
+
+function updatePreview() {
+  const values = collectFormValues();
+  const copy = translations[languageSelect.value] || translations.de;
+
+  if (!parsedTrip) {
+    tripOutput.textContent = copy.previewPlaceholder;
+    return;
   }
 
-  return cleaned + '.ics';
+  if (previewMode === 'delay' && Array.isArray(lastDelayResults) && lastDelayResults.length > 0) {
+    tripOutput.textContent = buildDelayMessage(parsedTrip, values, lastDelayResults);
+    return;
+  }
+
+  if (previewMode === 'liveDeparture') {
+    tripOutput.textContent = buildLiveEventMessage('departure', parsedTrip, values, lastLiveDepartureResult);
+    return;
+  }
+
+  if (previewMode === 'liveArrival') {
+    tripOutput.textContent = buildLiveEventMessage('arrival', parsedTrip, values, lastLiveArrivalResult);
+    return;
+  }
+
+  tripOutput.textContent = buildTripMessage(parsedTrip, values);
+}
+
+function setDetailsVisible(isVisible) {
+  detailsSection.classList.toggle('hidden', !isVisible);
+}
+
+function persistTripData() {
+  const values = collectFormValues();
+  const payload = {
+    searchLink: values.searchLink,
+    coach: values.coach,
+    seat: values.seat,
+    parsedTrip,
+    parsedSourceLink
+  };
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+}
+
+function clearTripState() {
+  parsedTrip = null;
+  parsedSourceLink = '';
+  previewMode = 'connection';
+  lastDelayResults = null;
+  lastLiveDepartureResult = null;
+  lastLiveArrivalResult = null;
+  setDetailsVisible(false);
+}
+
+function applySearchLinkState(showError) {
+  const copy = translations[languageSelect.value] || translations.de;
+  const link = (searchLinkInput.value || '').trim();
+
+  if (!link) {
+    clearTripState();
+    updatePreview();
+    return;
+  }
+
+  if (!isLikelyBahnSearchLink(link)) {
+    clearTripState();
+    updatePreview();
+    if (showError) showFeedback(copy.parseErrorHint, 'error');
+    return;
+  }
+
+  try {
+    parsedTrip = parseDbSearchLink(link);
+    parsedSourceLink = link;
+    previewMode = 'connection';
+    lastDelayResults = null;
+    lastLiveDepartureResult = null;
+    lastLiveArrivalResult = null;
+    setDetailsVisible(true);
+    persistTripData();
+    updatePreview();
+  } catch (_error) {
+    clearTripState();
+    updatePreview();
+    if (showError) showFeedback(copy.parseErrorHint, 'error');
+  }
 }
 
 function localizePage(language) {
   const copy = translations[language] || translations.de;
-
   document.documentElement.lang = language;
   document.title = copy.pageTitle;
 
   Object.entries(copy).forEach(([key, value]) => {
     const node = document.getElementById(key);
-    if (node) {
-      node.textContent = value;
-    }
+    if (node) node.textContent = value;
   });
 
-  const customOption = serverSelect.querySelector('option[value="custom"]');
-  if (customOption) {
-    customOption.textContent = copy.customServerOption;
+  showConnectionButton.textContent = `🔍 ${copy.showConnectionButton}`;
+  delayButton.textContent = `⏱️ ${copy.delayButton}`;
+  liveDepartureButton.textContent = `🟢 ${copy.liveDepartureButton}`;
+  liveArrivalButton.textContent = `🟢 ${copy.liveArrivalButton}`;
+  deleteButton.textContent = `🗑️ ${copy.deleteButton}`;
+  sendButton.textContent = `📤 ${copy.sendButton}`;
+
+  if (!tripHint.dataset.feedback) {
+    tripHint.textContent = copy.tripHint;
+    tripHint.classList.remove('is-success', 'is-error');
   }
 
-  offlineLocationInput.placeholder = copy.offlineLocationPlaceholder;
-
-  if (copy.sequenceOptions) {
-    const currentVal = sequenceInput.value;
-    sequenceInput.innerHTML = '';
-    copy.sequenceOptions.forEach((label, idx) => {
-      const opt = document.createElement('option');
-      opt.value = String(idx);
-      opt.textContent = label;
-      sequenceInput.appendChild(opt);
-    });
-    sequenceInput.value = currentVal in copy.sequenceOptions ? currentVal : '0';
-  }
-
-  if (!submitHint.dataset.feedback) {
-    submitHint.textContent = copy.submitHint;
-    submitHint.classList.remove('is-success', 'is-error');
-  }
-
-  submitButton.textContent = copy.submitButton;
   updatePreview();
 }
 
-function showSubmitFeedback(message, state) {
-  submitHint.dataset.feedback = 'true';
-  submitHint.textContent = message;
-  submitHint.classList.toggle('is-success', state === 'success');
-  submitHint.classList.toggle('is-error', state === 'error');
+function loadTripData() {
+  const stored = localStorage.getItem(STORAGE_KEY);
+  if (!stored) return;
 
-  window.clearTimeout(feedbackTimer);
-  feedbackTimer = window.setTimeout(() => {
-    const copy = translations[languageSelect.value] || translations.de;
-    submitHint.dataset.feedback = '';
-    submitHint.textContent = copy.submitHint;
-    submitHint.classList.remove('is-success', 'is-error');
-  }, 2800);
-}
-
-function updateDynamicVisibility() {
-  const isOnline = locationType.value === 'online';
-
-  onlineFields.classList.toggle('hidden', !isOnline);
-  onlineRoomField.classList.toggle('hidden', !isOnline);
-  customServerField.classList.toggle('hidden', !isOnline || serverSelect.value !== 'custom');
-  offlineLocationField.classList.toggle('hidden', isOnline);
-
-  if (isOnline) {
-    offlineLocationInput.value = '';
-  } else {
-    roomNameInput.value = '';
-    customServerInput.value = '';
+  try {
+    const data = JSON.parse(stored);
+    searchLinkInput.value = data.searchLink || '';
+    coachInput.value = data.coach || '';
+    seatInput.value = data.seat || '';
+  } catch (error) {
+    console.error('Could not load stored data:', error);
   }
 }
 
-function updatePreview() {
-  const values = collectFormValues('wird-beim-senden-erzeugt@meet-up.webxdc');
-  invitationOutput.textContent = buildSharedMessage(values);
+function deleteTrip() {
+  const copy = translations[languageSelect.value] || translations.de;
+  if (!window.confirm('Wirklich die gespeicherte Verbindung löschen?')) return;
+
+  searchLinkInput.value = '';
+  coachInput.value = '';
+  seatInput.value = '';
+  clearTripState();
+  localStorage.removeItem(STORAGE_KEY);
+
+  showFeedback(copy.deletedHint, 'success');
+  updatePreview();
 }
 
 async function sendMessageToChat() {
   const copy = translations[languageSelect.value] || translations.de;
-  const values = collectFormValues(createUid());
-  const text = buildSharedMessage(values);
-  const icsContent = buildIcsContent(values);
+
+  if (!parsedTrip) {
+    showFeedback(copy.saveFirstHint, 'error');
+    return;
+  }
+
+  const text = tripOutput.textContent;
+  if (!text || text === copy.previewPlaceholder) {
+    showFeedback(copy.saveFirstHint, 'error');
+    return;
+  }
+
+  const values = collectFormValues();
+  const icsContent = buildIcsContent(parsedTrip, values);
   const icsBlob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-  const fileName = fileNameFromSummary(values.summary || 'termin');
+  const fileName = generateIcsFileName(parsedTrip.from, parsedTrip.to);
 
   try {
     if (!window.webxdc || window.webxdc.__isFallback || typeof window.webxdc.sendToChat !== 'function') {
       await navigator.clipboard.writeText(text);
-      invitationOutput.textContent = text;
-      showSubmitFeedback(copy.fallbackHint, 'success');
+      showFeedback(copy.fallbackHint, 'success');
       return;
     }
 
@@ -608,12 +728,23 @@ async function sendMessageToChat() {
       }
     });
 
-    invitationOutput.textContent = text;
-    showSubmitFeedback(copy.preparedHint, 'success');
+    try {
+      const bahnImageBlob = await loadBahnImageBlob();
+      await window.webxdc.sendToChat({
+        text: 'Delta Bahn',
+        file: {
+          name: 'bahn.png',
+          blob: bahnImageBlob
+        }
+      });
+    } catch (imageError) {
+      console.error('Could not send bahn.png:', imageError);
+    }
+
+    showFeedback(copy.preparedHint, 'success');
   } catch (error) {
     console.error(error);
-    invitationOutput.textContent = text;
-    showSubmitFeedback(copy.errorHint, 'error');
+    showFeedback(copy.errorHint, 'error');
   }
 }
 
@@ -621,36 +752,144 @@ languageSelect.addEventListener('change', () => {
   localizePage(languageSelect.value);
 });
 
-locationType.addEventListener('change', () => {
-  updateDynamicVisibility();
+showConnectionButton.addEventListener('click', (event) => {
+  event.preventDefault();
+  const copy = translations[languageSelect.value] || translations.de;
+  if (!parsedTrip) {
+    showFeedback(copy.saveFirstHint, 'error');
+    return;
+  }
+  previewMode = 'connection';
   updatePreview();
 });
 
-serverSelect.addEventListener('change', () => {
-  updateDynamicVisibility();
-  updatePreview();
+delayButton.addEventListener('click', async (event) => {
+  event.preventDefault();
+  const copy = translations[languageSelect.value] || translations.de;
+  if (!parsedTrip) {
+    showFeedback(copy.saveFirstHint, 'error');
+    return;
+  }
+  const values = collectFormValues();
+  tripOutput.textContent = copy.delayLoadingHint;
+  delayButton.disabled = true;
+  try {
+    const delayResults = await fetchDelays(parsedTrip);
+    lastDelayResults = delayResults;
+    lastLiveDepartureResult = null;
+    lastLiveArrivalResult = null;
+    previewMode = 'delay';
+    tripOutput.textContent = buildDelayMessage(parsedTrip, values, delayResults);
+  } catch (_error) {
+    showFeedback(copy.delayFetchErrorHint, 'error');
+    previewMode = 'connection';
+    updatePreview();
+  } finally {
+    delayButton.disabled = false;
+  }
 });
 
-[
-  meetingTitleInput,
-  descriptionInput,
-  startDateInput,
-  startTimeInput,
-  durationInput,
-  timezoneSelect,
-  sequenceInput,
-  customServerInput,
-  roomNameInput,
-  offlineLocationInput
-].forEach((field) => {
-  field.addEventListener('input', updatePreview);
-  field.addEventListener('change', updatePreview);
+liveDepartureButton.addEventListener('click', async (event) => {
+  event.preventDefault();
+  const copy = translations[languageSelect.value] || translations.de;
+  if (!parsedTrip || !parsedTrip.legs || parsedTrip.legs.length === 0) {
+    showFeedback(copy.saveFirstHint, 'error');
+    return;
+  }
+
+  const values = collectFormValues();
+  const firstLeg = parsedTrip.legs[0];
+  tripOutput.textContent = copy.liveDepartureLoadingHint;
+  liveDepartureButton.disabled = true;
+  try {
+    const result = await fetchLiveEvent(firstLeg.fromId, firstLeg.departure, 'departures');
+    lastLiveDepartureResult = result;
+    lastLiveArrivalResult = null;
+    lastDelayResults = null;
+    previewMode = 'liveDeparture';
+    tripOutput.textContent = buildLiveEventMessage('departure', parsedTrip, values, result);
+  } catch (_error) {
+    showFeedback(copy.liveFetchErrorHint, 'error');
+    previewMode = 'connection';
+    updatePreview();
+  } finally {
+    liveDepartureButton.disabled = false;
+  }
 });
 
-form.addEventListener('submit', (event) => {
+liveArrivalButton.addEventListener('click', async (event) => {
+  event.preventDefault();
+  const copy = translations[languageSelect.value] || translations.de;
+  if (!parsedTrip || !parsedTrip.legs || parsedTrip.legs.length === 0) {
+    showFeedback(copy.saveFirstHint, 'error');
+    return;
+  }
+
+  const values = collectFormValues();
+  const lastLeg = parsedTrip.legs[parsedTrip.legs.length - 1];
+  tripOutput.textContent = copy.liveArrivalLoadingHint;
+  liveArrivalButton.disabled = true;
+  try {
+    const result = await fetchLiveEvent(lastLeg.toId, lastLeg.arrival, 'arrivals');
+    lastLiveArrivalResult = result;
+    lastLiveDepartureResult = null;
+    lastDelayResults = null;
+    previewMode = 'liveArrival';
+    tripOutput.textContent = buildLiveEventMessage('arrival', parsedTrip, values, result);
+  } catch (_error) {
+    showFeedback(copy.liveFetchErrorHint, 'error');
+    previewMode = 'connection';
+    updatePreview();
+  } finally {
+    liveArrivalButton.disabled = false;
+  }
+});
+
+deleteButton.addEventListener('click', (event) => {
+  event.preventDefault();
+  deleteTrip();
+});
+
+sendButton.addEventListener('click', (event) => {
   event.preventDefault();
   sendMessageToChat();
 });
 
-updateDynamicVisibility();
+[searchLinkInput, coachInput, seatInput].forEach((field) => {
+  field.addEventListener('input', () => {
+    if (field === searchLinkInput) {
+      applySearchLinkState(false);
+      return;
+    }
+    if (parsedTrip) {
+      try {
+        persistTripData();
+      } catch (error) {
+        console.error('Could not save data:', error);
+      }
+    }
+    updatePreview();
+  });
+  field.addEventListener('change', () => {
+    if (field === searchLinkInput) {
+      applySearchLinkState(true);
+      return;
+    }
+    if (parsedTrip) {
+      try {
+        persistTripData();
+      } catch (error) {
+        console.error('Could not save data:', error);
+      }
+    }
+    updatePreview();
+  });
+});
+
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+});
+
+loadTripData();
 localizePage(languageSelect.value);
+applySearchLinkState(false);
