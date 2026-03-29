@@ -68,7 +68,7 @@ jobs:
             done
 
             workdir="$(mktemp -d)"
-            artifact="${RUNNER_TEMP}/meet-up-${tag}.xdc"
+            artifact="${RUNNER_TEMP}/delt-bahn-${tag}.xdc"
 
             git archive "${sha}" | tar -x -C "${workdir}"
             (
@@ -80,9 +80,9 @@ jobs:
               --target "${sha}" \
               --title "${tag}" \
               --notes "Laden Sie die xdc herunter und laden Sie die dann als Datei in Ihren Chat hoch." \
-              "${artifact}#meet-up.xdc"
+              "${artifact}#delt-bahn.xdc"
 
-            cp "${artifact}" "${build_dir}/meet-up-${tag}.xdc"
+            cp "${artifact}" "${build_dir}/delt-bahn-${tag}.xdc"
 
             echo "Created release ${tag} for ${sha}."
 
@@ -92,6 +92,6 @@ jobs:
       - name: Upload xdc build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: meet-up-xdc-builds
+          name: delt-bahn-xdc-builds
           path: build/*.xdc
           if-no-files-found: ignore
