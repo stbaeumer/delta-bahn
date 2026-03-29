@@ -1,10 +1,12 @@
 const translations = {
   de: {
     pageTitle: 'Delta Bahn',
-    pageSubtitle: 'Plane deine Reise mit bahn.de. Teile deine Verbindung in Deltachat.',
+    pageSubtitle: 'Plane deine Reise mit bahn.de. Teile deine Verbindung mit Deltachat.',
     languageLabel: 'Sprache:',
     searchLinkLabel: 'ICS-Datei hochladen:',
     searchLinkHint: 'Wählen Sie in bahn.de "In Kalender speichern", um calendar.ics herunterzuladen.',
+    icsFileLoadedHint: 'Datei bereits hochgeladen',
+    icsFileLoadedUnknown: 'Datei bereits hochgeladen.',
     coachLabel: 'Wagen (optional):',
     seatLabel: 'Platz (optional):',
     showConnectionButton: 'Verbindung zeigen',
@@ -59,7 +61,9 @@ const translations = {
     pageSubtitle: 'Plan your trip on bahn.de. Share your connection in Delta Chat.',
     languageLabel: 'Language:',
     searchLinkLabel: 'Upload ICS file:',
-    searchLinkHint: 'Plan your trip at bahn.de. Choose "Save in calendar" to download calendar.ics. Upload calendar.ics here to share your trip data.',
+    searchLinkHint: 'Choose "Save in calendar" to download calendar.ics. Upload calendar.ics here to share your trip data.',
+    icsFileLoadedHint: 'File already uploaded',
+    icsFileLoadedUnknown: 'A file is already uploaded.',
     coachLabel: 'Coach (optional):',
     seatLabel: 'Seat (optional):',
     showConnectionButton: 'Show connection',
@@ -118,10 +122,12 @@ function localeForLanguage(language) {
 const STORAGE_KEY = 'delta-bahn-trip-v2';
 const API_BASE = 'https://v6.db.transport.rest';
 const BAHN_IMAGE_PATH = 'icons/bahn.png';
+const stopIdCache = new Map();
 
 const form = document.getElementById('tripForm');
 const languageSelect = document.getElementById('language');
 const icsFileInput = document.getElementById('icsFile');
+const icsFileStatus = document.getElementById('icsFileStatus');
 const detailsSection = document.getElementById('detailsSection');
 const coachInput = document.getElementById('coach');
 const seatInput = document.getElementById('seat');
@@ -340,6 +346,68 @@ function parseConnectionInput(icsText) {
     arrival: arrDate ? toIsoLocal(arrDate) : (lastLeg ? lastLeg.arrival : ''),
     legs
   };
+}
+
+function normalizeStationName(name) {
+  return String(name || '')
+    .toLowerCase()
+    .replace(/\s+/g, ' ')
+    .replace(/[()\[\],.]/g, '')
+    .trim();
+}
+
+async function resolveStopId(stationName) {
+  const name = String(stationName || '').trim();
+  if (!name) return '';
+
+  const key = normalizeStationName(name);
+  if (stopIdCache.has(key)) {
+    return stopIdCache.get(key);
+  }
+
+  try {
+    const url = `${API_BASE}/locations?query=${encodeURIComponent(name)}&stops=true&results=8&language=de`;
+    const response = await fetch(url);
+    if (!response.ok) {
+      stopIdCache.set(key, '');
+      return '';
+    }
+
+    const data = await response.json();
+    const locations = Array.isArray(data) ? data : [];
+    const stops = locations.filter((item) => item && (item.type === 'stop' || item.type === 'station'));
+    if (stops.length === 0) {
+      stopIdCache.set(key, '');
+      return '';
+    }
+
+    const exact = stops.find((item) => normalizeStationName(item.name) === key);
+    const startsWith = stops.find((item) => normalizeStationName(item.name).startsWith(key) || key.startsWith(normalizeStationName(item.name)));
+    const chosen = exact || startsWith || stops[0];
+    const id = chosen && chosen.id ? String(chosen.id) : '';
+    stopIdCache.set(key, id);
+    return id;
+  } catch (_error) {
+    stopIdCache.set(key, '');
+    return '';
+  }
+}
+
+async function enrichParsedTripStopIds(parsed) {
+  if (!parsed || !Array.isArray(parsed.legs) || parsed.legs.length === 0) {
+    return parsed;
+  }
+
+  await Promise.all(parsed.legs.map(async (leg) => {
+    if (!leg.fromId) {
+      leg.fromId = await resolveStopId(leg.from);
+    }
+    if (!leg.toId) {
+      leg.toId = await resolveStopId(leg.to);
+    }
+  }));
+
+  return parsed;
 }
 
 async function fetchDelays(parsed) {
@@ -689,6 +757,20 @@ function setDetailsVisible(isVisible) {
   detailsSection.classList.toggle('hidden', !isVisible);
 }
 
+function updateIcsFileStatus() {
+  const copy = translations[languageSelect.value] || translations.de;
+  if (parsedTrip) {
+    const statusText = parsedSourceFileName
+      ? `${copy.icsFileLoadedHint}: ${parsedSourceFileName}`
+      : copy.icsFileLoadedUnknown;
+    icsFileStatus.textContent = statusText;
+    icsFileStatus.classList.remove('hidden');
+    return;
+  }
+  icsFileStatus.textContent = '';
+  icsFileStatus.classList.add('hidden');
+}
+
 function persistTripData() {
   const values = collectFormValues();
   const payload = {
@@ -711,9 +793,10 @@ function clearTripState() {
   lastLiveDepartureResult = null;
   lastLiveArrivalResult = null;
   setDetailsVisible(false);
+  updateIcsFileStatus();
 }
 
-function applyIcsTextState(icsText, fileName, showError) {
+async function applyIcsTextState(icsText, fileName, showError) {
   const copy = translations[languageSelect.value] || translations.de;
   const source = String(icsText || '').trim();
 
@@ -732,6 +815,7 @@ function applyIcsTextState(icsText, fileName, showError) {
 
   try {
     parsedTrip = parseConnectionInput(source);
+    await enrichParsedTripStopIds(parsedTrip);
     parsedSourceLink = source;
     parsedSourceFileName = fileName || '';
     previewMode = 'connection';
@@ -739,6 +823,7 @@ function applyIcsTextState(icsText, fileName, showError) {
     lastLiveDepartureResult = null;
     lastLiveArrivalResult = null;
     setDetailsVisible(true);
+    updateIcsFileStatus();
     persistTripData();
     updatePreview();
   } catch (_error) {
@@ -764,6 +849,7 @@ function localizePage(language) {
   liveArrivalButton.textContent = `🟢 ${copy.liveArrivalButton}`;
   deleteButton.textContent = `🗑️ ${copy.deleteButton}`;
   sendButton.textContent = `📤 ${copy.sendButton}`;
+  updateIcsFileStatus();
 
   if (!tripHint.dataset.feedback) {
     tripHint.textContent = copy.tripHint;
@@ -784,7 +870,18 @@ function loadTripData() {
     parsedTrip = data.parsedTrip || null;
     parsedSourceLink = data.parsedSourceLink || '';
     parsedSourceFileName = data.parsedSourceFileName || data.sourceFileName || '';
-    if (parsedTrip) setDetailsVisible(true);
+    if (parsedTrip) {
+      setDetailsVisible(true);
+      updateIcsFileStatus();
+      enrichParsedTripStopIds(parsedTrip)
+        .then(() => {
+          persistTripData();
+          updatePreview();
+        })
+        .catch(() => {
+          // Keep existing data if ID enrichment fails.
+        });
+    }
   } catch (error) {
     console.error('Could not load stored data:', error);
   }
@@ -831,7 +928,7 @@ async function sendMessageToChat() {
     }
 
     await window.webxdc.sendToChat({
-      text,
+      text: '',
       file: {
         name: fileName,
         blob: icsBlob
@@ -841,7 +938,7 @@ async function sendMessageToChat() {
     try {
       const bahnImageBlob = await loadBahnImageBlob();
       await window.webxdc.sendToChat({
-        text: 'Delta Bahn',
+        text,
         file: {
           name: 'bahn.png',
           blob: bahnImageBlob
@@ -889,7 +986,7 @@ icsFileInput.addEventListener('change', async () => {
 
   try {
     const icsText = await readFileAsText(file);
-    applyIcsTextState(icsText, file.name, true);
+    await applyIcsTextState(icsText, file.name, true);
   } catch (_error) {
     showFeedback(copy.parseErrorHint, 'error');
     clearTripState();
@@ -919,6 +1016,8 @@ delayButton.addEventListener('click', async (event) => {
   tripOutput.textContent = copy.delayLoadingHint;
   delayButton.disabled = true;
   try {
+    await enrichParsedTripStopIds(parsedTrip);
+    persistTripData();
     const delayResults = await fetchDelays(parsedTrip);
     lastDelayResults = delayResults;
     lastLiveDepartureResult = null;
@@ -943,10 +1042,12 @@ liveDepartureButton.addEventListener('click', async (event) => {
   }
 
   const values = collectFormValues();
-  const firstLeg = parsedTrip.legs[0];
   tripOutput.textContent = copy.liveDepartureLoadingHint;
   liveDepartureButton.disabled = true;
   try {
+    await enrichParsedTripStopIds(parsedTrip);
+    persistTripData();
+    const firstLeg = parsedTrip.legs[0];
     const result = await fetchLiveEvent(firstLeg.fromId, firstLeg.departure, 'departures');
     lastLiveDepartureResult = result;
     lastLiveArrivalResult = null;
@@ -971,10 +1072,12 @@ liveArrivalButton.addEventListener('click', async (event) => {
   }
 
   const values = collectFormValues();
-  const lastLeg = parsedTrip.legs[parsedTrip.legs.length - 1];
   tripOutput.textContent = copy.liveArrivalLoadingHint;
   liveArrivalButton.disabled = true;
   try {
+    await enrichParsedTripStopIds(parsedTrip);
+    persistTripData();
+    const lastLeg = parsedTrip.legs[parsedTrip.legs.length - 1];
     const result = await fetchLiveEvent(lastLeg.toId, lastLeg.arrival, 'arrivals');
     lastLiveArrivalResult = result;
     lastLiveDepartureResult = null;
