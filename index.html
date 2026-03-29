@@ -15,31 +15,30 @@
 
       <div class="title-block">
         <h1 id="pageTitle">Delta Bahn</h1>
-        <p class="subtitle" id="pageSubtitle">Plane deine Zugfahrt und teile den Reiseplan mit anderen über Delta Chat.</p>
+        <p class="subtitle" id="pageSubtitle">Plane deine Reise mit bahn.de. Teile deine Verbindung in Deltachat.</p>
       </div>
 
       <form id="tripForm">
         <div class="field">
-          <label class="field-label" for="searchLink">
-            <img class="field-icon" src="icons/link.svg" alt="Suchlink" onerror="this.classList.add('hidden')">
-            <span id="searchLinkLabel">Geteilte Verbindung:</span>
+          <label class="field-label" for="language">
+            <span id="languageLabel">Sprache:</span>
           </label>
-          <textarea id="searchLink" name="searchLink" autocomplete="off" rows="6" placeholder="Verbindung am ...&#10;• von ... Abfahrt ... Gl. ...&#10;• nach ... Ankunft ... Gl. ..."></textarea>
-          <button id="pasteClipboardButton" class="secondary-button" type="button">📋 Aus Zwischenablage einfügen</button>
-          <div class="field-hint" id="searchLinkHint">Teilen Sie eine Verbindung aus der Bahn-App/Website und fügen Sie den Text hier ein.</div>
+          <select id="language" name="language">
+            <option value="de" selected>Deutsch</option>
+            <option value="en">English</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="icsFile">
+            <img class="field-icon" src="icons/link.svg" alt="Suchlink" onerror="this.classList.add('hidden')">
+            <span id="searchLinkLabel">ICS-Datei hochladen:</span>
+          </label>
+          <input id="icsFile" name="icsFile" type="file" accept=".ics,text/calendar">
+          <div class="field-hint" id="searchLinkHint">Wählen Sie in bahn.de "In Kalender speichern", um calendar.ics herunterzuladen.</div>
         </div>
 
         <div id="detailsSection" class="details-section hidden">
-          <div class="field">
-            <label class="field-label" for="language">
-              <span id="languageLabel">Sprache:</span>
-            </label>
-            <select id="language" name="language">
-              <option value="de" selected>Deutsch</option>
-              <option value="en">English</option>
-            </select>
-          </div>
-
           <div class="field">
             <label class="field-label" for="coach">
               <img class="field-icon" src="icons/agenda.svg" alt="Wagen" onerror="this.classList.add('hidden')">
@@ -65,7 +64,7 @@
               <button id="deleteButton" class="gray-button" type="button">🗑️ Verbindung löschen</button>
               <button id="sendButton" class="green-button" type="button">📤 Senden</button>
             </div>
-            <div class="assistive" id="tripHint">Verbindungstext einfügen, gültige Verbindung wird automatisch angezeigt.</div>
+            <div class="assistive" id="tripHint">Datei geladen. Prüfen Sie die Vorschau und senden Sie die Verbindung.</div>
           </div>
 
           <div class="trip-output">

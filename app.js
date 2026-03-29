@@ -1,11 +1,10 @@
 const translations = {
   de: {
     pageTitle: 'Delta Bahn',
-    pageSubtitle: 'Füge den geteilten Verbindungstext ein und teile die ausgelesene Verbindung über Delta Chat.',
+    pageSubtitle: 'Plane deine Reise mit bahn.de. Teile deine Verbindung in Deltachat.',
     languageLabel: 'Sprache:',
-    searchLinkLabel: 'Geteilte Verbindung:',
-    searchLinkHint: 'Teilen Sie eine Verbindung aus der Bahn-App/Website und fügen Sie den Text hier ein.',
-    pasteClipboardButton: 'Aus Zwischenablage einfügen',
+    searchLinkLabel: 'ICS-Datei hochladen:',
+    searchLinkHint: 'Wählen Sie in bahn.de "In Kalender speichern", um calendar.ics herunterzuladen.',
     coachLabel: 'Wagen (optional):',
     seatLabel: 'Platz (optional):',
     showConnectionButton: 'Verbindung zeigen',
@@ -14,7 +13,7 @@ const translations = {
     liveArrivalButton: 'Live-Ankunft',
     deleteButton: 'Verbindung löschen',
     sendButton: 'Senden',
-    tripHint: 'Verbindungstext einfügen, gültige Verbindung wird automatisch angezeigt.',
+    tripHint: 'Datei geladen. Prüfen Sie die Vorschau und senden Sie die Verbindung.',
     outputHeading: 'Vorschau',
     footerLinkLabel: 'Delta Bahn auf Codeberg',
     apiFooterInfo: 'Bahn API: v6.db.transport.rest',
@@ -23,10 +22,9 @@ const translations = {
     errorHint: 'Die Nachricht konnte nicht gesendet werden.',
     savedHint: 'Verbindung erfolgreich erkannt und gespeichert.',
     deletedHint: 'Gespeicherte Verbindung gelöscht.',
-    parseErrorHint: 'Ungültiger Verbindungstext. Er muss die Wörter "Abfahrt", "Ankunft", "Verbindung" und "Gl." enthalten.',
-    clipboardReadErrorHint: 'Zwischenablage konnte nicht gelesen werden. Bitte den Text manuell einfügen.',
-    saveFirstHint: 'Bitte zuerst einen gültigen Verbindungstext eingeben.',
-    previewPlaceholder: 'Noch keine gültige Verbindung erkannt.\nDer Text muss die Wörter "Abfahrt", "Ankunft", "Verbindung" und "Gl." enthalten.',
+    parseErrorHint: 'Ungültige ICS-Datei. Bitte eine Bahn-calendar.ics hochladen.',
+    saveFirstHint: 'Bitte zuerst eine gültige ICS-Datei hochladen.',
+    previewPlaceholder: 'Noch keine gültige ICS-Datei geladen.\nBitte zuerst eine calendar.ics hochladen.',
     delayLoadingHint: 'Verspätungsdaten werden abgerufen…',
     liveDepartureLoadingHint: 'Live-Abfahrtsdaten werden abgerufen…',
     liveArrivalLoadingHint: 'Live-Ankunftsdaten werden abgerufen…',
@@ -54,15 +52,14 @@ const translations = {
     labelSeat: 'Platz',
     labelPlatform: 'Gleis',
     labelPlanned: 'geplant',
-    hintLine: 'ℹ️ Aus Bahn-Link ausgelesene Verbindungsdaten:'
+    hintLine: 'ℹ️ Aus ICS-Datei ausgelesene Verbindungsdaten:'
   },
   en: {
     pageTitle: 'Delta Train',
-    pageSubtitle: 'Paste the shared connection text and share parsed trip details via Delta Chat.',
+    pageSubtitle: 'Plan your trip on bahn.de. Share your connection in Delta Chat.',
     languageLabel: 'Language:',
-    searchLinkLabel: 'Shared connection text:',
-    searchLinkHint: 'Share a connection from Bahn app/website and paste the copied text here.',
-    pasteClipboardButton: 'Paste from clipboard',
+    searchLinkLabel: 'Upload ICS file:',
+    searchLinkHint: 'Plan your trip at bahn.de. Choose "Save in calendar" to download calendar.ics. Upload calendar.ics here to share your trip data.',
     coachLabel: 'Coach (optional):',
     seatLabel: 'Seat (optional):',
     showConnectionButton: 'Show connection',
@@ -71,7 +68,7 @@ const translations = {
     liveArrivalButton: 'Live arrival',
     deleteButton: 'Delete connection',
     sendButton: 'Send',
-    tripHint: 'Paste connection text, valid connection will appear automatically.',
+    tripHint: 'File loaded. Check the preview and send your connection.',
     outputHeading: 'Preview',
     footerLinkLabel: 'Delta Train on Codeberg',
     apiFooterInfo: 'Rail API: v6.db.transport.rest',
@@ -80,10 +77,9 @@ const translations = {
     errorHint: 'The message could not be sent.',
     savedHint: 'Connection parsed and saved.',
     deletedHint: 'Saved connection deleted.',
-    parseErrorHint: 'Invalid connection text. It must contain the words "Abfahrt", "Ankunft", "Verbindung", and "Gl.".',
-    clipboardReadErrorHint: 'Could not read clipboard. Please paste the text manually.',
-    saveFirstHint: 'Please enter valid connection text first.',
-    previewPlaceholder: 'No valid connection found yet.\nThe text must contain "Abfahrt", "Ankunft", "Verbindung", and "Gl.".',
+    parseErrorHint: 'Invalid ICS file. Please upload a Bahn calendar.ics file.',
+    saveFirstHint: 'Please upload a valid ICS file first.',
+    previewPlaceholder: 'No valid ICS file loaded yet.\nPlease upload calendar.ics first.',
     delayLoadingHint: 'Fetching delay data…',
     liveDepartureLoadingHint: 'Fetching live departure data…',
     liveArrivalLoadingHint: 'Fetching live arrival data…',
@@ -111,7 +107,7 @@ const translations = {
     labelSeat: 'Seat',
     labelPlatform: 'Platform',
     labelPlanned: 'planned',
-    hintLine: 'ℹ️ Parsed trip data from Bahn link:'
+    hintLine: 'ℹ️ Parsed trip data from ICS file:'
   }
 };
 
@@ -125,8 +121,7 @@ const BAHN_IMAGE_PATH = 'icons/bahn.png';
 
 const form = document.getElementById('tripForm');
 const languageSelect = document.getElementById('language');
-const searchLinkInput = document.getElementById('searchLink');
-const pasteClipboardButton = document.getElementById('pasteClipboardButton');
+const icsFileInput = document.getElementById('icsFile');
 const detailsSection = document.getElementById('detailsSection');
 const coachInput = document.getElementById('coach');
 const seatInput = document.getElementById('seat');
@@ -137,11 +132,13 @@ const liveArrivalButton = document.getElementById('liveArrivalButton');
 const deleteButton = document.getElementById('deleteButton');
 const sendButton = document.getElementById('sendButton');
 const tripHint = document.getElementById('tripHint');
+const outputHeading = document.getElementById('outputHeading');
 const tripOutput = document.getElementById('tripOutput');
 
 let feedbackTimer = 0;
 let parsedTrip = null;
 let parsedSourceLink = '';
+let parsedSourceFileName = '';
 let previewMode = 'connection';
 let lastDelayResults = null;
 let lastLiveDepartureResult = null;
@@ -221,119 +218,128 @@ function parseGermanLocalDateTime(dateText, timeText) {
   return Number.isNaN(date.getTime()) ? null : date;
 }
 
-function sanitizeSharedLine(line) {
-  return String(line || '').trim().replace(/^[-•*]\s*/, '').trim();
+function decodeIcsText(value) {
+  return String(value || '')
+    .replace(/\\n/g, '\n')
+    .replace(/\\,/g, ',')
+    .replace(/\\;/g, ';')
+    .replace(/\\\\/g, '\\');
 }
 
-function isPlausibleSharedConnectionText(text) {
+function unfoldIcsText(text) {
+  return String(text || '').replace(/\r\n/g, '\n').replace(/\n[ \t]/g, '');
+}
+
+function extractIcsProperty(eventText, propName) {
+  const regex = new RegExp(`^${propName}(?:;[^:]+)?:([\\s\\S]*?)$`, 'mi');
+  const match = eventText.match(regex);
+  return match ? decodeIcsText(match[1].trim()) : '';
+}
+
+function parseIcsDateTime(value) {
+  const raw = String(value || '').trim();
+  const match = raw.match(/^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})?(Z)?$/);
+  if (!match) return null;
+  const year = Number(match[1]);
+  const month = Number(match[2]) - 1;
+  const day = Number(match[3]);
+  const hour = Number(match[4]);
+  const minute = Number(match[5]);
+  const second = Number(match[6] || '0');
+  if (match[7] === 'Z') {
+    return new Date(Date.UTC(year, month, day, hour, minute, second));
+  }
+  return new Date(year, month, day, hour, minute, second, 0);
+}
+
+function isPlausibleIcsText(text) {
   const normalized = String(text || '').toLowerCase();
-  return normalized.includes('abfahrt')
-    && normalized.includes('ankunft')
-    && normalized.includes('verbindung')
-    && normalized.includes('gl.');
+  return normalized.includes('begin:vcalendar')
+    && normalized.includes('begin:vevent')
+    && normalized.includes('summary:')
+    && normalized.includes('description:');
 }
 
-function parseSharedConnectionText(text) {
-  if (!isPlausibleSharedConnectionText(text)) {
-    throw new Error('invalid-shared-text');
+function parseLegsFromDescription(description, fallbackDateText) {
+  const lines = String(description || '').split('\n').map((line) => line.trim());
+  const dateLine = lines.find((line) => /^datum:/i.test(line)) || '';
+  const dateMatch = dateLine.match(/(\d{2}\.\d{2}\.\d{4})/)
+    || String(fallbackDateText || '').match(/(\d{2}\.\d{2}\.\d{4})/);
+  const routeIndexList = [];
+  for (let i = 0; i < lines.length; i += 1) {
+    if (lines[i].includes('➞') && !/^datum:/i.test(lines[i])) routeIndexList.push(i);
   }
 
-  const normalizedText = String(text || '').replace(/\r\n/g, '\n').trim();
-  const lines = normalizedText.split('\n').map(sanitizeSharedLine).filter(Boolean);
+  const legs = [];
+  routeIndexList.forEach((routeIdx) => {
+    const routeLine = lines[routeIdx] || '';
+    const trainLine = (lines[routeIdx + 1] || '').trim();
+    const depLine = lines.slice(routeIdx + 1, routeIdx + 6).find((line) => /●\s*ab/i.test(line)) || '';
+    const arrLine = lines.slice(routeIdx + 1, routeIdx + 8).find((line) => /○\s*an/i.test(line)) || '';
 
-  const dateLine = lines.find((line) => /^verbindung\s+am\s+/i.test(line)) || '';
-  const depLine = lines.find((line) => /^von\s+/i.test(line)) || '';
-  const arrLine = lines.find((line) => /^nach\s+/i.test(line)) || '';
+    const routeMatch = routeLine.match(/^(.*?)\s*➞\s*(.*?)$/);
+    const depMatch = depLine.match(/●\s*ab\s*([0-2]?\d:[0-5]\d)\s*(.*?)\s*▷\s*Gleis\s*(.+)$/i);
+    const arrMatch = arrLine.match(/○\s*an\s*([0-2]?\d:[0-5]\d)\s*(.*?)\s*▷\s*Gleis\s*(.+)$/i);
+    if (!routeMatch || !depMatch || !arrMatch) return;
 
-  const dateMatch = dateLine.match(/(\d{2}\.\d{2}\.\d{4})/);
-  if (!dateMatch || !depLine || !arrLine) {
-    throw new Error('missing-shared-fields');
-  }
+    const dateText = dateMatch ? dateMatch[1] : '';
+    const depDate = parseGermanLocalDateTime(dateText, depMatch[1]);
+    const arrDate = parseGermanLocalDateTime(dateText, arrMatch[1]);
+    const train = trainLine && !trainLine.includes('➞') ? trainLine : '';
 
-  const depMatch = depLine.match(/^von\s+(.+?),\s*Abfahrt\s+([0-2]?\d:[0-5]\d)\s*Uhr\s*Gl\.\s*(.+?)(?:\s+mit\s+(.+))?$/i);
-  const arrMatch = arrLine.match(/^nach\s+(.+?),\s*Ankunft\s+([0-2]?\d:[0-5]\d)\s*Uhr\s*Gl\.\s*(.+?)(?:\s+mit\s+(.+))?$/i);
+    legs.push({
+      from: (routeMatch[1] || depMatch[2] || '').trim(),
+      fromId: '',
+      to: (routeMatch[2] || arrMatch[2] || '').trim(),
+      toId: '',
+      departure: depDate ? toIsoLocal(depDate) : '',
+      arrival: arrDate ? toIsoLocal(arrDate) : '',
+      train,
+      departurePlatform: (depMatch[3] || '').trim(),
+      arrivalPlatform: (arrMatch[3] || '').trim()
+    });
+  });
 
-  if (!depMatch || !arrMatch) {
-    throw new Error('invalid-shared-format');
-  }
-
-  const tripDate = dateMatch[1];
-  const departureDate = parseGermanLocalDateTime(tripDate, depMatch[2]);
-  const arrivalDate = parseGermanLocalDateTime(tripDate, arrMatch[2]);
-
-  const from = depMatch[1].trim();
-  const to = arrMatch[1].trim();
-  const departurePlatform = depMatch[3].trim();
-  const arrivalPlatform = arrMatch[3].trim();
-  const depTrain = (depMatch[4] || '').trim();
-  const arrTrain = (arrMatch[4] || '').trim();
-  const train = arrTrain || depTrain;
-  const sourceUrlMatch = normalizedText.match(/https?:\/\/\S+/i);
-
-  return {
-    sourceLink: sourceUrlMatch ? sourceUrlMatch[0] : '',
-    from,
-    to,
-    departure: departureDate ? toIsoLocal(departureDate) : '',
-    arrival: arrivalDate ? toIsoLocal(arrivalDate) : '',
-    legs: [
-      {
-        from,
-        fromId: '',
-        to,
-        toId: '',
-        departure: departureDate ? toIsoLocal(departureDate) : '',
-        arrival: arrivalDate ? toIsoLocal(arrivalDate) : '',
-        train,
-        departurePlatform,
-        arrivalPlatform
-      }
-    ]
-  };
+  return legs;
 }
 
-function parseDbSearchLink(link) {
-  if (!link || !String(link).trim()) {
-    throw new Error('invalid-link');
+function parseConnectionInput(icsText) {
+  if (!isPlausibleIcsText(icsText)) {
+    throw new Error('invalid-ics');
   }
 
-  const url = new URL(link);
-  const validHost = /(^|\.)bahn\.de$/i.test(url.hostname);
-  if (!validHost) {
-    throw new Error('invalid-link');
+  const unfolded = unfoldIcsText(icsText);
+  const eventMatch = unfolded.match(/BEGIN:VEVENT\n([\s\S]*?)\nEND:VEVENT/i);
+  if (!eventMatch) {
+    throw new Error('missing-vevent');
   }
 
-  const hashParams = new URLSearchParams((url.hash || '').replace(/^#/, ''));
-  const searchParams = url.searchParams;
-  const params = hashParams.size > 0 ? hashParams : searchParams;
+  const eventText = eventMatch[1];
+  const summary = extractIcsProperty(eventText, 'SUMMARY');
+  const description = extractIcsProperty(eventText, 'DESCRIPTION');
+  const dtStartRaw = extractIcsProperty(eventText, 'DTSTART');
+  const dtEndRaw = extractIcsProperty(eventText, 'DTEND');
 
-  if (!params || !params.toString()) {
-    throw new Error('missing-params');
-  }
-
-  const fromName = decodeParamValue(params.get('so')) || parseStationFromOid(params.get('soid'));
-  const toName = decodeParamValue(params.get('zo')) || parseStationFromOid(params.get('zoid'));
-  const hd = parseHdTimestamp(params.get('hd'));
-  const legs = parseLegsFromGh(params.get('gh'));
+  const depDate = parseIcsDateTime(dtStartRaw);
+  const arrDate = parseIcsDateTime(dtEndRaw);
+  const routeMatch = summary.match(/^(.*?)\s*[➞\-]>?\s*(.*?)$/);
+  const legs = parseLegsFromDescription(description, '') || [];
 
   const firstLeg = legs[0] || null;
   const lastLeg = legs.length > 0 ? legs[legs.length - 1] : null;
-
-  const departureDate = hd || (firstLeg && firstLeg.departure ? new Date(firstLeg.departure) : null);
-  const arrivalDate = lastLeg && lastLeg.arrival ? new Date(lastLeg.arrival) : null;
+  const from = routeMatch ? routeMatch[1].trim() : (firstLeg ? firstLeg.from : '');
+  const to = routeMatch ? routeMatch[2].trim() : (lastLeg ? lastLeg.to : '');
 
   return {
-    sourceLink: link,
-    from: fromName || (firstLeg ? firstLeg.from : ''),
-    to: toName || (lastLeg ? lastLeg.to : ''),
-    departure: departureDate && !Number.isNaN(departureDate.getTime()) ? toIsoLocal(departureDate) : '',
-    arrival: arrivalDate && !Number.isNaN(arrivalDate.getTime()) ? toIsoLocal(arrivalDate) : '',
+    sourceLink: '',
+    sourceDescription: description,
+    summary,
+    from,
+    to,
+    departure: depDate ? toIsoLocal(depDate) : (firstLeg ? firstLeg.departure : ''),
+    arrival: arrDate ? toIsoLocal(arrDate) : (lastLeg ? lastLeg.arrival : ''),
     legs
   };
-}
-
-function parseConnectionInput(inputText) {
-  return parseSharedConnectionText(inputText);
 }
 
 async function fetchDelays(parsed) {
@@ -474,7 +480,7 @@ function buildLiveEventMessage(type, parsed, values, result) {
 
 function collectFormValues() {
   return {
-    searchLink: (searchLinkInput.value || '').trim(),
+    sourceFileName: parsedSourceFileName || '',
     coach: (coachInput.value || '').trim(),
     seat: (seatInput.value || '').trim()
   };
@@ -654,9 +660,12 @@ function updatePreview() {
   const copy = translations[languageSelect.value] || translations.de;
 
   if (!parsedTrip) {
+    outputHeading.textContent = copy.outputHeading;
     tripOutput.textContent = copy.previewPlaceholder;
     return;
   }
+
+  outputHeading.textContent = parsedTrip.summary || copy.outputHeading;
 
   if (previewMode === 'delay' && Array.isArray(lastDelayResults) && lastDelayResults.length > 0) {
     tripOutput.textContent = buildDelayMessage(parsedTrip, values, lastDelayResults);
@@ -683,11 +692,12 @@ function setDetailsVisible(isVisible) {
 function persistTripData() {
   const values = collectFormValues();
   const payload = {
-    searchLink: values.searchLink,
+    sourceFileName: values.sourceFileName,
     coach: values.coach,
     seat: values.seat,
     parsedTrip,
-    parsedSourceLink
+    parsedSourceLink,
+    parsedSourceFileName
   };
   localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
 }
@@ -695,6 +705,7 @@ function persistTripData() {
 function clearTripState() {
   parsedTrip = null;
   parsedSourceLink = '';
+  parsedSourceFileName = '';
   previewMode = 'connection';
   lastDelayResults = null;
   lastLiveDepartureResult = null;
@@ -702,17 +713,17 @@ function clearTripState() {
   setDetailsVisible(false);
 }
 
-function applySearchLinkState(showError) {
+function applyIcsTextState(icsText, fileName, showError) {
   const copy = translations[languageSelect.value] || translations.de;
-  const link = (searchLinkInput.value || '').trim();
+  const source = String(icsText || '').trim();
 
-  if (!link) {
+  if (!source) {
     clearTripState();
     updatePreview();
     return;
   }
 
-  if (!isPlausibleSharedConnectionText(link)) {
+  if (!isPlausibleIcsText(source)) {
     clearTripState();
     updatePreview();
     if (showError) showFeedback(copy.parseErrorHint, 'error');
@@ -720,8 +731,9 @@ function applySearchLinkState(showError) {
   }
 
   try {
-    parsedTrip = parseConnectionInput(link);
-    parsedSourceLink = link;
+    parsedTrip = parseConnectionInput(source);
+    parsedSourceLink = source;
+    parsedSourceFileName = fileName || '';
     previewMode = 'connection';
     lastDelayResults = null;
     lastLiveDepartureResult = null;
@@ -752,7 +764,6 @@ function localizePage(language) {
   liveArrivalButton.textContent = `🟢 ${copy.liveArrivalButton}`;
   deleteButton.textContent = `🗑️ ${copy.deleteButton}`;
   sendButton.textContent = `📤 ${copy.sendButton}`;
-  pasteClipboardButton.textContent = `📋 ${copy.pasteClipboardButton}`;
 
   if (!tripHint.dataset.feedback) {
     tripHint.textContent = copy.tripHint;
@@ -768,9 +779,12 @@ function loadTripData() {
 
   try {
     const data = JSON.parse(stored);
-    searchLinkInput.value = data.searchLink || '';
     coachInput.value = data.coach || '';
     seatInput.value = data.seat || '';
+    parsedTrip = data.parsedTrip || null;
+    parsedSourceLink = data.parsedSourceLink || '';
+    parsedSourceFileName = data.parsedSourceFileName || data.sourceFileName || '';
+    if (parsedTrip) setDetailsVisible(true);
   } catch (error) {
     console.error('Could not load stored data:', error);
   }
@@ -780,7 +794,7 @@ function deleteTrip() {
   const copy = translations[languageSelect.value] || translations.de;
   if (!window.confirm('Wirklich die gespeicherte Verbindung löschen?')) return;
 
-  searchLinkInput.value = '';
+  icsFileInput.value = '';
   coachInput.value = '';
   seatInput.value = '';
   clearTripState();
@@ -848,19 +862,38 @@ languageSelect.addEventListener('change', () => {
   localizePage(languageSelect.value);
 });
 
-pasteClipboardButton.addEventListener('click', async (event) => {
-  event.preventDefault();
+function readFileAsText(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result || ''));
+    reader.onerror = () => reject(new Error('file-read-failed'));
+    reader.readAsText(file, 'utf-8');
+  });
+}
+
+icsFileInput.addEventListener('change', async () => {
   const copy = translations[languageSelect.value] || translations.de;
+  const file = icsFileInput.files && icsFileInput.files[0];
+  if (!file) {
+    clearTripState();
+    updatePreview();
+    return;
+  }
+
+  if (!/\.ics$/i.test(file.name)) {
+    showFeedback(copy.parseErrorHint, 'error');
+    clearTripState();
+    updatePreview();
+    return;
+  }
+
   try {
-    const clipboardText = await navigator.clipboard.readText();
-    if (!clipboardText || !clipboardText.trim()) {
-      showFeedback(copy.parseErrorHint, 'error');
-      return;
-    }
-    searchLinkInput.value = clipboardText.trim();
-    applySearchLinkState(true);
+    const icsText = await readFileAsText(file);
+    applyIcsTextState(icsText, file.name, true);
   } catch (_error) {
-    window.alert(copy.clipboardReadErrorHint);
+    showFeedback(copy.parseErrorHint, 'error');
+    clearTripState();
+    updatePreview();
   }
 });
 
@@ -967,12 +1000,8 @@ sendButton.addEventListener('click', (event) => {
   sendMessageToChat();
 });
 
-[searchLinkInput, coachInput, seatInput].forEach((field) => {
+[coachInput, seatInput].forEach((field) => {
   field.addEventListener('input', () => {
-    if (field === searchLinkInput) {
-      applySearchLinkState(false);
-      return;
-    }
     if (parsedTrip) {
       try {
         persistTripData();
@@ -983,10 +1012,6 @@ sendButton.addEventListener('click', (event) => {
     updatePreview();
   });
   field.addEventListener('change', () => {
-    if (field === searchLinkInput) {
-      applySearchLinkState(true);
-      return;
-    }
     if (parsedTrip) {
       try {
         persistTripData();
@@ -1004,4 +1029,4 @@ form.addEventListener('submit', (event) => {
 
 loadTripData();
 localizePage(languageSelect.value);
-applySearchLinkState(false);
+updatePreview();
