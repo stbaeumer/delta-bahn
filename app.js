@@ -1,10 +1,11 @@
 const translations = {
   de: {
     pageTitle: 'Delta Bahn',
-    pageSubtitle: 'Füge deinen Bahn-Suchlink ein und teile die ausgelesene Verbindung über Delta Chat.',
+    pageSubtitle: 'Füge den geteilten Verbindungstext ein und teile die ausgelesene Verbindung über Delta Chat.',
     languageLabel: 'Sprache:',
-    searchLinkLabel: 'Bahn-Suchlink:',
-    searchLinkHint: 'Suchen Sie eine Verbindung auf bahn.de. Sobald Sie eine einzelne Verbindung auf der Webseite angezeigt bekommen, kopieren Sie den Link hierher.',
+    searchLinkLabel: 'Geteilte Verbindung:',
+    searchLinkHint: 'Teilen Sie eine Verbindung aus der Bahn-App/Website und fügen Sie den Text hier ein.',
+    pasteClipboardButton: 'Aus Zwischenablage einfügen',
     coachLabel: 'Wagen (optional):',
     seatLabel: 'Platz (optional):',
     showConnectionButton: 'Verbindung zeigen',
@@ -13,7 +14,7 @@ const translations = {
     liveArrivalButton: 'Live-Ankunft',
     deleteButton: 'Verbindung löschen',
     sendButton: 'Senden',
-    tripHint: 'Link einfügen, gültige Verbindung wird automatisch angezeigt.',
+    tripHint: 'Verbindungstext einfügen, gültige Verbindung wird automatisch angezeigt.',
     outputHeading: 'Vorschau',
     footerLinkLabel: 'Delta Bahn auf Codeberg',
     apiFooterInfo: 'Bahn API: v6.db.transport.rest',
@@ -22,9 +23,10 @@ const translations = {
     errorHint: 'Die Nachricht konnte nicht gesendet werden.',
     savedHint: 'Verbindung erfolgreich erkannt und gespeichert.',
     deletedHint: 'Gespeicherte Verbindung gelöscht.',
-    parseErrorHint: 'Ungültiger Suchlink. Der Link muss die Wörter "bahn" und "suche" enthalten und aus der Bahn-Verbindungssuche stammen.',
-    saveFirstHint: 'Bitte zuerst einen gültigen Bahn-Suchlink eingeben.',
-    previewPlaceholder: 'Noch keine gültige Verbindung erkannt.\nDer Link muss die Wörter "bahn" und "suche" enthalten.',
+    parseErrorHint: 'Ungültiger Verbindungstext. Er muss die Wörter "Abfahrt", "Ankunft", "Verbindung" und "Gl." enthalten.',
+    clipboardReadErrorHint: 'Zwischenablage konnte nicht gelesen werden. Bitte den Text manuell einfügen.',
+    saveFirstHint: 'Bitte zuerst einen gültigen Verbindungstext eingeben.',
+    previewPlaceholder: 'Noch keine gültige Verbindung erkannt.\nDer Text muss die Wörter "Abfahrt", "Ankunft", "Verbindung" und "Gl." enthalten.',
     delayLoadingHint: 'Verspätungsdaten werden abgerufen…',
     liveDepartureLoadingHint: 'Live-Abfahrtsdaten werden abgerufen…',
     liveArrivalLoadingHint: 'Live-Ankunftsdaten werden abgerufen…',
@@ -42,6 +44,7 @@ const translations = {
     iconArrival: '⏰',
     iconLeg: '🚆',
     iconSeat: '💺',
+    iconPlatform: '🛤️',
     labelRoute: 'Verbindung',
     labelDeparture: 'Abfahrt',
     labelArrival: 'Ankunft',
@@ -49,15 +52,17 @@ const translations = {
     labelSeatPlan: 'Sitzplan',
     labelCoach: 'Wagen',
     labelSeat: 'Platz',
+    labelPlatform: 'Gleis',
     labelPlanned: 'geplant',
     hintLine: 'ℹ️ Aus Bahn-Link ausgelesene Verbindungsdaten:'
   },
   en: {
     pageTitle: 'Delta Train',
-    pageSubtitle: 'Paste your Bahn search link and share parsed trip details via Delta Chat.',
+    pageSubtitle: 'Paste the shared connection text and share parsed trip details via Delta Chat.',
     languageLabel: 'Language:',
-    searchLinkLabel: 'Bahn Search Link:',
-    searchLinkHint: 'Search for a connection on bahn.de. Once a single connection is shown, copy that link and paste it here.',
+    searchLinkLabel: 'Shared connection text:',
+    searchLinkHint: 'Share a connection from Bahn app/website and paste the copied text here.',
+    pasteClipboardButton: 'Paste from clipboard',
     coachLabel: 'Coach (optional):',
     seatLabel: 'Seat (optional):',
     showConnectionButton: 'Show connection',
@@ -66,7 +71,7 @@ const translations = {
     liveArrivalButton: 'Live arrival',
     deleteButton: 'Delete connection',
     sendButton: 'Send',
-    tripHint: 'Paste link, valid connection will appear automatically.',
+    tripHint: 'Paste connection text, valid connection will appear automatically.',
     outputHeading: 'Preview',
     footerLinkLabel: 'Delta Train on Codeberg',
     apiFooterInfo: 'Rail API: v6.db.transport.rest',
@@ -75,9 +80,10 @@ const translations = {
     errorHint: 'The message could not be sent.',
     savedHint: 'Connection parsed and saved.',
     deletedHint: 'Saved connection deleted.',
-    parseErrorHint: 'Invalid Bahn search link. Please paste a link from bahn.de/buchung/fahrplan/suche.',
-    saveFirstHint: 'Please enter a valid Bahn search link first.',
-    previewPlaceholder: 'No valid connection found yet.\nThe link must contain the words "bahn" and "suche".',
+    parseErrorHint: 'Invalid connection text. It must contain the words "Abfahrt", "Ankunft", "Verbindung", and "Gl.".',
+    clipboardReadErrorHint: 'Could not read clipboard. Please paste the text manually.',
+    saveFirstHint: 'Please enter valid connection text first.',
+    previewPlaceholder: 'No valid connection found yet.\nThe text must contain "Abfahrt", "Ankunft", "Verbindung", and "Gl.".',
     delayLoadingHint: 'Fetching delay data…',
     liveDepartureLoadingHint: 'Fetching live departure data…',
     liveArrivalLoadingHint: 'Fetching live arrival data…',
@@ -95,6 +101,7 @@ const translations = {
     iconArrival: '⏰',
     iconLeg: '🚆',
     iconSeat: '💺',
+    iconPlatform: '🛤️',
     labelRoute: 'Route',
     labelDeparture: 'Departure',
     labelArrival: 'Arrival',
@@ -102,6 +109,7 @@ const translations = {
     labelSeatPlan: 'Seat plan',
     labelCoach: 'Coach',
     labelSeat: 'Seat',
+    labelPlatform: 'Platform',
     labelPlanned: 'planned',
     hintLine: 'ℹ️ Parsed trip data from Bahn link:'
   }
@@ -118,6 +126,7 @@ const BAHN_IMAGE_PATH = 'icons/bahn.png';
 const form = document.getElementById('tripForm');
 const languageSelect = document.getElementById('language');
 const searchLinkInput = document.getElementById('searchLink');
+const pasteClipboardButton = document.getElementById('pasteClipboardButton');
 const detailsSection = document.getElementById('detailsSection');
 const coachInput = document.getElementById('coach');
 const seatInput = document.getElementById('seat');
@@ -198,13 +207,93 @@ function parseLegsFromGh(ghValue) {
   return legs;
 }
 
-function isLikelyBahnSearchLink(link) {
-  const normalized = String(link || '').toLowerCase();
-  return normalized.includes('bahn') && normalized.includes('suche');
+function parseGermanLocalDateTime(dateText, timeText) {
+  const dateMatch = /^([0-3]?\d)\.([0-1]?\d)\.(\d{4})$/.exec((dateText || '').trim());
+  const timeMatch = /^([0-2]?\d):([0-5]\d)$/.exec((timeText || '').trim());
+  if (!dateMatch || !timeMatch) return null;
+
+  const day = Number(dateMatch[1]);
+  const month = Number(dateMatch[2]) - 1;
+  const year = Number(dateMatch[3]);
+  const hour = Number(timeMatch[1]);
+  const minute = Number(timeMatch[2]);
+  const date = new Date(year, month, day, hour, minute, 0, 0);
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
+function sanitizeSharedLine(line) {
+  return String(line || '').trim().replace(/^[-•*]\s*/, '').trim();
+}
+
+function isPlausibleSharedConnectionText(text) {
+  const normalized = String(text || '').toLowerCase();
+  return normalized.includes('abfahrt')
+    && normalized.includes('ankunft')
+    && normalized.includes('verbindung')
+    && normalized.includes('gl.');
+}
+
+function parseSharedConnectionText(text) {
+  if (!isPlausibleSharedConnectionText(text)) {
+    throw new Error('invalid-shared-text');
+  }
+
+  const normalizedText = String(text || '').replace(/\r\n/g, '\n').trim();
+  const lines = normalizedText.split('\n').map(sanitizeSharedLine).filter(Boolean);
+
+  const dateLine = lines.find((line) => /^verbindung\s+am\s+/i.test(line)) || '';
+  const depLine = lines.find((line) => /^von\s+/i.test(line)) || '';
+  const arrLine = lines.find((line) => /^nach\s+/i.test(line)) || '';
+
+  const dateMatch = dateLine.match(/(\d{2}\.\d{2}\.\d{4})/);
+  if (!dateMatch || !depLine || !arrLine) {
+    throw new Error('missing-shared-fields');
+  }
+
+  const depMatch = depLine.match(/^von\s+(.+?),\s*Abfahrt\s+([0-2]?\d:[0-5]\d)\s*Uhr\s*Gl\.\s*(.+?)(?:\s+mit\s+(.+))?$/i);
+  const arrMatch = arrLine.match(/^nach\s+(.+?),\s*Ankunft\s+([0-2]?\d:[0-5]\d)\s*Uhr\s*Gl\.\s*(.+?)(?:\s+mit\s+(.+))?$/i);
+
+  if (!depMatch || !arrMatch) {
+    throw new Error('invalid-shared-format');
+  }
+
+  const tripDate = dateMatch[1];
+  const departureDate = parseGermanLocalDateTime(tripDate, depMatch[2]);
+  const arrivalDate = parseGermanLocalDateTime(tripDate, arrMatch[2]);
+
+  const from = depMatch[1].trim();
+  const to = arrMatch[1].trim();
+  const departurePlatform = depMatch[3].trim();
+  const arrivalPlatform = arrMatch[3].trim();
+  const depTrain = (depMatch[4] || '').trim();
+  const arrTrain = (arrMatch[4] || '').trim();
+  const train = arrTrain || depTrain;
+  const sourceUrlMatch = normalizedText.match(/https?:\/\/\S+/i);
+
+  return {
+    sourceLink: sourceUrlMatch ? sourceUrlMatch[0] : '',
+    from,
+    to,
+    departure: departureDate ? toIsoLocal(departureDate) : '',
+    arrival: arrivalDate ? toIsoLocal(arrivalDate) : '',
+    legs: [
+      {
+        from,
+        fromId: '',
+        to,
+        toId: '',
+        departure: departureDate ? toIsoLocal(departureDate) : '',
+        arrival: arrivalDate ? toIsoLocal(arrivalDate) : '',
+        train,
+        departurePlatform,
+        arrivalPlatform
+      }
+    ]
+  };
 }
 
 function parseDbSearchLink(link) {
-  if (!isLikelyBahnSearchLink(link)) {
+  if (!link || !String(link).trim()) {
     throw new Error('invalid-link');
   }
 
@@ -241,6 +330,10 @@ function parseDbSearchLink(link) {
     arrival: arrivalDate && !Number.isNaN(arrivalDate.getTime()) ? toIsoLocal(arrivalDate) : '',
     legs
   };
+}
+
+function parseConnectionInput(inputText) {
+  return parseSharedConnectionText(inputText);
 }
 
 async function fetchDelays(parsed) {
@@ -427,7 +520,9 @@ function buildTripMessage(parsed, values) {
     const legDep = formatDateTimeForMessage(leg.departure, languageSelect.value) || '?';
     const legArr = formatDateTimeForMessage(leg.arrival, languageSelect.value) || '?';
     const trainSuffix = leg.train ? ` (${leg.train})` : '';
-    lines.push(`${copy.iconLeg} ${copy.labelLeg} ${index + 1}: ${leg.from || '?'} -> ${leg.to || '?'} | ${legDep} - ${legArr}${trainSuffix}`);
+    const depPlatform = leg.departurePlatform ? ` | ${copy.iconPlatform} ${copy.labelDeparture} ${copy.labelPlatform}: ${leg.departurePlatform}` : '';
+    const arrPlatform = leg.arrivalPlatform ? ` | ${copy.iconPlatform} ${copy.labelArrival} ${copy.labelPlatform}: ${leg.arrivalPlatform}` : '';
+    lines.push(`${copy.iconLeg} ${copy.labelLeg} ${index + 1}: ${leg.from || '?'} -> ${leg.to || '?'} | ${legDep} - ${legArr}${trainSuffix}${depPlatform}${arrPlatform}`);
   });
 
   const seatLine = buildSeatLine(values, copy);
@@ -617,7 +712,7 @@ function applySearchLinkState(showError) {
     return;
   }
 
-  if (!isLikelyBahnSearchLink(link)) {
+  if (!isPlausibleSharedConnectionText(link)) {
     clearTripState();
     updatePreview();
     if (showError) showFeedback(copy.parseErrorHint, 'error');
@@ -625,7 +720,7 @@ function applySearchLinkState(showError) {
   }
 
   try {
-    parsedTrip = parseDbSearchLink(link);
+    parsedTrip = parseConnectionInput(link);
     parsedSourceLink = link;
     previewMode = 'connection';
     lastDelayResults = null;
@@ -657,6 +752,7 @@ function localizePage(language) {
   liveArrivalButton.textContent = `🟢 ${copy.liveArrivalButton}`;
   deleteButton.textContent = `🗑️ ${copy.deleteButton}`;
   sendButton.textContent = `📤 ${copy.sendButton}`;
+  pasteClipboardButton.textContent = `📋 ${copy.pasteClipboardButton}`;
 
   if (!tripHint.dataset.feedback) {
     tripHint.textContent = copy.tripHint;
@@ -750,6 +846,22 @@ async function sendMessageToChat() {
 
 languageSelect.addEventListener('change', () => {
   localizePage(languageSelect.value);
+});
+
+pasteClipboardButton.addEventListener('click', async (event) => {
+  event.preventDefault();
+  const copy = translations[languageSelect.value] || translations.de;
+  try {
+    const clipboardText = await navigator.clipboard.readText();
+    if (!clipboardText || !clipboardText.trim()) {
+      showFeedback(copy.parseErrorHint, 'error');
+      return;
+    }
+    searchLinkInput.value = clipboardText.trim();
+    applySearchLinkState(true);
+  } catch (_error) {
+    window.alert(copy.clipboardReadErrorHint);
+  }
 });
 
 showConnectionButton.addEventListener('click', (event) => {

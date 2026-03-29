@@ -22,10 +22,11 @@
         <div class="field">
           <label class="field-label" for="searchLink">
             <img class="field-icon" src="icons/link.svg" alt="Suchlink" onerror="this.classList.add('hidden')">
-            <span id="searchLinkLabel">Bahn-Suchlink:</span>
+            <span id="searchLinkLabel">Geteilte Verbindung:</span>
           </label>
-          <input id="searchLink" name="searchLink" type="url" autocomplete="off" placeholder="https://www.bahn.de/buchung/fahrplan/suche#...">
-          <div class="field-hint" id="searchLinkHint">Suchen Sie eine Verbindung auf bahn.de. Sobald Sie eine einzelne Verbindung auf der Webseite angezeigt bekommen, kopieren Sie den Link hierher.</div>
+          <textarea id="searchLink" name="searchLink" autocomplete="off" rows="6" placeholder="Verbindung am ...&#10;• von ... Abfahrt ... Gl. ...&#10;• nach ... Ankunft ... Gl. ..."></textarea>
+          <button id="pasteClipboardButton" class="secondary-button" type="button">📋 Aus Zwischenablage einfügen</button>
+          <div class="field-hint" id="searchLinkHint">Teilen Sie eine Verbindung aus der Bahn-App/Website und fügen Sie den Text hier ein.</div>
         </div>
 
         <div id="detailsSection" class="details-section hidden">
@@ -64,7 +65,7 @@
               <button id="deleteButton" class="gray-button" type="button">🗑️ Verbindung löschen</button>
               <button id="sendButton" class="green-button" type="button">📤 Senden</button>
             </div>
-            <div class="assistive" id="tripHint">Link einfügen, gültige Verbindung wird automatisch angezeigt.</div>
+            <div class="assistive" id="tripHint">Verbindungstext einfügen, gültige Verbindung wird automatisch angezeigt.</div>
           </div>
 
           <div class="trip-output">
